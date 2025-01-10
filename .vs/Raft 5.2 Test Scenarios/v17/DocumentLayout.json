@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 test scenarios\\rpctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|solutionrelative:raft 5.2 test scenarios\\rpctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 class library\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Node.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Node.cs",
+              "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Node.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Node.cs",
+              "RelativeToolTip": "Raft 5.2 Class Library\\Node.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-10T18:04:34.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Class1.cs",
+              "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Class1.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Class1.cs",
+              "RelativeToolTip": "Raft 5.2 Class Library\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-10T17:57:04.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RPCTests.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "RelativeDocumentMoniker": "Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "RelativeToolTip": "Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-10T17:56:26.384Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
