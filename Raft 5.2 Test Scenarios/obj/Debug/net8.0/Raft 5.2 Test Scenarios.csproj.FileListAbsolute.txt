@@ -105,3 +105,4 @@ C:\Users\cort.cox\source\repos\Raft 5.2 Test Scenarios\Raft 5.2 Test Scenarios\o
 C:\Users\cort.cox\source\repos\Raft 5.2 Test Scenarios\Raft 5.2 Test Scenarios\obj\Debug\net8.0\Raft 5.2 Test Scenarios.pdb
 C:\Users\cort.cox\source\repos\Raft 5.2 Test Scenarios\Raft 5.2 Test Scenarios\obj\Debug\net8.0\Raft 5.2 Test Scenarios.genruntimeconfig.cache
 C:\Users\cort.cox\source\repos\Raft 5.2 Test Scenarios\Raft 5.2 Test Scenarios\obj\Debug\net8.0\ref\Raft 5.2 Test Scenarios.dll
+C:\Users\cort.cox\source\repos\Raft 5.2 Test Scenarios\Raft 5.2 Test Scenarios\obj\Debug\net8.0\Raft 5.2 Test Scenarios.sourcelink.json

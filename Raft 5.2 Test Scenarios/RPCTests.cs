@@ -52,5 +52,23 @@ namespace Raft_5._2_Test_Scenarios
             Node node = new(false);
             Assert.False(node.IsElectionWinner());
         }
+
+        [Fact]
+        public void FollowerVotesWhenElectionIsStarted()
+        {
+            //Given the sever is a follower
+            Node node = new(true);
+            node.becomeFollower();
+            Assert.Equal("follower", node.serverType);
+            
+            //When an election has started
+            Election election = new();
+            List<Node> nodes = new List<Node>();
+            nodes.Add(node);
+            election.startElection(nodes);
+
+            //Then the server casts their vote
+            Assert.True(node.hasVoted);
+        }
     }
 }
