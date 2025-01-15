@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Timers;
 using Xunit;
 using System.Diagnostics;
+using Meziantou.Xunit;
 
 namespace Raft_5._2_Test_Scenarios
 {
+    //[DisableParallelization]
     public class RPCTests
     {
         [Fact]

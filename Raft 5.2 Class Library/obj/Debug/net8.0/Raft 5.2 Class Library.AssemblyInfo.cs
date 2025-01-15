@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Raft 5.2 Class Library")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0df38cfbbb4def2fa6b36487f276773f55f83c53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f09918f27e732fad7067dbf9bf96782a2ff028a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Raft 5.2 Class Library")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Raft 5.2 Class Library")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

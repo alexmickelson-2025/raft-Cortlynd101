@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Raft_5._2_Class_Library
 {
-    public class Node
+    public class Node : INode
     {
         public bool _vote = false;
         public bool hasVoted = false;
@@ -15,7 +15,7 @@ namespace Raft_5._2_Class_Library
         public string serverType = "follower";
         public bool receivedHeartBeat = false;
         public List<string> entries = [];
-        public int leaderId = -1;
+        public int leaderId { get; set; } = -1;
         public int electionTimeout = 0;
         public int voteCount = 0;
         public bool responsive = true;
@@ -29,7 +29,7 @@ namespace Raft_5._2_Class_Library
         {
             if (serverType == "leader")
             {
-                
+
             }
             else if (serverType == "follower")
             {

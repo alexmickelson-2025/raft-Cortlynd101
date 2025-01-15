@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Xunit.TestFramework("Meziantou.Xunit.ParallelTestFramework", "Meziantou.Xunit.ParallelTestFramework")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Raft 5.2 Test Scenarios")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+275dffc64c1ad091d4127b60a25496e512922f27")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f09918f27e732fad7067dbf9bf96782a2ff028a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Raft 5.2 Test Scenarios")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Raft 5.2 Test Scenarios")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
