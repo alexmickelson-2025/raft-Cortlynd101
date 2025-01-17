@@ -9,13 +9,38 @@
 <button @onclick="startSimulation">start</button>
 @foreach (var node in nodes)
 {
-    <div>
-        @node.leaderId
+    <div class="p-3 col-4">
+        <div class="border p-3 rounded-3">
+            @node.Id
+            <div>
+                @node.InnerNode.serverType
+            </div>
+        </div>
+        @* <div>
+            <label for="speed">
+                Election timeout between @(FormatMilliSeconds(150 * Node.NodeIntervalScalar)) and @(FormatMilliSeconds(300 *
+            Node.NodeIntervalScalar)) seconds
+                <br>
+                <input type="range" id="speed" name="speed" min="1" max="150" @bind:event="oninput"
+                       @bind=Node.NodeIntervalScalar @onchange=UpdateTimer />
+            </label>
+        </div>
+        <div>
+
+            <label for="NetworkRequestDelay">
+                Network Delay @FormatMilliSeconds(SimulationNode.NetworkRequestDelay) seconds
+                <br>
+                <input type="range" id="NetworkRequestDelay" name="NetworkRequestDelay" min="10" max="10000"
+                       @bind:event="oninput" @bind=SimulationNode.NetworkRequestDelay />
+            </label>
+        </div> *@
     </div>
 }
 
 @code {
-    List<SimulationNode>? nodes = [];
+    private Timer? timer;
+
+    List<SimulationNode> nodes = [];
     void startSimulation()
     {
         var node1 = new Node();
@@ -29,9 +54,21 @@
         // node1.OtherNodes = [simulation2, simulation3];
         // node2.OtherNodes = [simulation1, simulation3];
         // node3.OtherNodes = [simulation1, simulation2];
-        StateHasChanged();
 
         nodes = [simulation1, simulation2, simulation3];
+        StateHasChanged();
+
+        // Cluster cluster = new();
+        // Election election = new();
+        // cluster.runCluster(nodes);
+
+
+        timer = new Timer(_ =>
+        {
+            // Console.WriteLine("here");
+
+            InvokeAsync(StateHasChanged);
+        }, null, 0, 200);
     }
 }
 

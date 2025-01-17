@@ -5,7 +5,7 @@
         bool clusterRunning = false;
         public Election election = new();
 
-        public void runCluster(List<Node> nodes)
+        public void runCluster(List<INode> nodes)
         {
             clusterRunning = true;
 

@@ -24,17 +24,17 @@ namespace Raft_5._2_Test_Scenarios
         {
             //1. When a leader is active it sends a heart beat within 50ms.
             // Testing #1
-            Node leader = new();
+            INode leader = new Node();
             leader.BecomeLeader();
             Assert.Equal("leader", leader.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeFollower();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(leader);
             nodes.Add(follower);
             cluster.runCluster(nodes);
@@ -49,17 +49,17 @@ namespace Raft_5._2_Test_Scenarios
         {
             //2. When a node receives an AppendEntries from another node, then first node remembers that other node is the current leader.
             // Testing #2
-            Node leader = new();
+            INode leader = new Node();
             leader.BecomeLeader();
             Assert.Equal("leader", leader.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeFollower();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(leader);
             nodes.Add(follower);
             cluster.runCluster(nodes);
@@ -74,7 +74,7 @@ namespace Raft_5._2_Test_Scenarios
         {
             //3. When a new node is initialized, it should be in follower state.
             // Testing #3
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
         }
 
@@ -83,12 +83,12 @@ namespace Raft_5._2_Test_Scenarios
         {
             //4. When a follower doesn't get a message for 300ms then it starts an election.
             // Testing #4
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(follower);
             cluster.runCluster(nodes);
 
@@ -104,12 +104,12 @@ namespace Raft_5._2_Test_Scenarios
             //      1. between
             //      2. random: call n times and make sure that there are some that are different (other properties of the distribution if you like)
             // Testing #5
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(follower);
             cluster.runCluster(nodes);
 
@@ -137,12 +137,12 @@ namespace Raft_5._2_Test_Scenarios
             //  3. reread term(?)
             //  4. assert after is greater(by at least 1)
             // Testing #6
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(follower);
             cluster.runCluster(nodes);
 
@@ -155,17 +155,17 @@ namespace Raft_5._2_Test_Scenarios
         {
             //7. When a follower does get an AppendEntries message, it resets the election timer. (i.e.it doesn't start an election even after more than 300ms)
             // Testing #7
-            Node leader = new();
+            INode leader = new Node();
             leader.BecomeLeader();
             Assert.Equal("leader", leader.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeFollower();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(leader);
             nodes.Add(follower);
             cluster.runCluster(nodes);
@@ -179,14 +179,14 @@ namespace Raft_5._2_Test_Scenarios
         {
             //8. Given an election begins, when the candidate gets a majority of votes, it becomes a leader. (think of the easy case; can use two tests for single and multi-node clusters)
             // Testing #8
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             candidate.term++;
             Assert.Equal("candidate", candidate.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             cluster.runCluster(nodes);
 
@@ -200,28 +200,28 @@ namespace Raft_5._2_Test_Scenarios
         {
             //8. Given an election begins, when the candidate gets a majority of votes, it becomes a leader. (think of the easy case; can use two tests for single and multi-node clusters)
             // Testing #8
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeDirectedFollower();
             follower.directedVote = 0;
             Assert.Equal("directedFollower", follower.serverType);
 
-            Node follower2 = new();
+            INode follower2 = new Node();
             follower2.BecomeDirectedFollower();
             follower2.directedVote = 0;
             Assert.Equal("directedFollower", follower2.serverType);
 
-            Node follower3 = new();
+            INode follower3 = new Node();
             follower3.BecomeDirectedFollower();
             follower3.directedVote = 0;
             Assert.Equal("directedFollower", follower3.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(follower);
             nodes.Add(follower2);
@@ -238,21 +238,21 @@ namespace Raft_5._2_Test_Scenarios
         {
             //9. Given a candidate receives a majority of votes while waiting for unresponsive node, it still becomes a leader.
             // Testing #9
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeDirectedFollower();
             follower.directedVote = 0;
             Assert.Equal("directedFollower", follower.serverType);
 
-            Node follower2 = new();
+            INode follower2 = new Node();
             follower2.BecomeDirectedFollower();
             follower2.directedVote = 0;
             Assert.Equal("directedFollower", follower2.serverType);
 
-            Node follower3 = new();
+            INode follower3 = new Node();
             follower3.BecomeDirectedFollower();
             follower3.directedVote = 0;
             follower3.responsive = false;
@@ -260,7 +260,7 @@ namespace Raft_5._2_Test_Scenarios
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(follower);
             nodes.Add(follower2);
@@ -277,17 +277,17 @@ namespace Raft_5._2_Test_Scenarios
         {
             //10. A follower that has not voted and is in an earlier term responds to a RequestForVoteRPC with yes. (the reply will be a separate RPC)
             // Testing #10
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             candidate.term++;
             Assert.Equal("candidate", candidate.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(follower);
             cluster.runCluster(nodes);
@@ -303,13 +303,13 @@ namespace Raft_5._2_Test_Scenarios
         {
             //11.Given a candidate server that just became a candidate, it votes for itself.
             // Testing #11
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             cluster.runCluster(nodes);
 
@@ -325,27 +325,27 @@ namespace Raft_5._2_Test_Scenarios
         {
             //12.Given a candidate, when it receives an AppendEntries message from a node with a later term, then candidate loses and becomes a follower.
             // Testing #12
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
-            Node candidate2 = new();
+            INode candidate2 = new Node();
             candidate2.BecomeCandidate();
             Assert.Equal("candidate", candidate2.serverType);
 
-            Node follower1 = new();
+            INode follower1 = new Node();
             follower1.BecomeDirectedFollower();
             follower1.directedVote = 1;
             Assert.Equal("directedFollower", follower1.serverType);
 
-            Node follower2 = new();
+            INode follower2 = new Node();
             follower2.BecomeDirectedFollower();
             follower2.directedVote = 1;
             Assert.Equal("directedFollower", follower2.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(candidate2);
             nodes.Add(follower1);
@@ -363,27 +363,27 @@ namespace Raft_5._2_Test_Scenarios
         {
             //13.Given a candidate, when it receives an AppendEntries message from a node with an equal term, then candidate loses and becomes a follower.
             // Testing #13
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
-            Node candidate2 = new();
+            INode candidate2 = new Node();
             candidate2.BecomeCandidate();
             Assert.Equal("candidate", candidate2.serverType);
 
-            Node follower1 = new();
+            INode follower1 = new Node();
             follower1.BecomeDirectedFollower();
             follower1.directedVote = 1;
             Assert.Equal("directedFollower", follower1.serverType);
 
-            Node follower2 = new();
+            INode follower2 = new Node();
             follower2.BecomeDirectedFollower();
             follower2.directedVote = 1;
             Assert.Equal("directedFollower", follower2.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(candidate2);
             nodes.Add(follower1);
@@ -401,22 +401,22 @@ namespace Raft_5._2_Test_Scenarios
         {
             //14. If a node receives a second request for vote for the same term, it should respond no. (again, separate RPC for response)
             // Testing #14
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             //We have to make sure this one gets precedent, otherwise either could go first
             candidate.goFirst = true;
             Assert.Equal("candidate", candidate.serverType);
 
-            Node candidate2 = new();
+            INode candidate2 = new Node();
             candidate2.BecomeCandidate();
             Assert.Equal("candidate", candidate2.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(candidate2);
             nodes.Add(follower);
@@ -433,25 +433,25 @@ namespace Raft_5._2_Test_Scenarios
         {
             //15. If a node receives a second request for vote for a future term, it should vote for that node.
             // Testing #15
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
-            Node candidate2 = new();
+            INode candidate2 = new Node();
             candidate2.BecomeCandidate();
             //Ensure the term is greater than the followers terms and greater than the other candidate
             candidate2.term = candidate2.term + 3;
             Assert.Equal("candidate", candidate2.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             Assert.Equal("follower", follower.serverType);
 
-            Node follower2 = new();
+            INode follower2 = new Node();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(candidate2);
             nodes.Add(follower);
@@ -469,21 +469,21 @@ namespace Raft_5._2_Test_Scenarios
         {
             //16. Given a candidate, when an election timer expires inside of an election, a new election is started.
             // Testing #16
-            Node candidate = new();
+            INode candidate = new Node();
             candidate.BecomeCandidate();
             Assert.Equal("candidate", candidate.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeDirectedFollower();
             follower.directedVote = 0;
             Assert.Equal("directedFollower", follower.serverType);
 
-            Node follower2 = new();
+            INode follower2 = new Node();
             follower2.BecomeDirectedFollower();
             follower2.directedVote = 1;
             Assert.Equal("directedFollower", follower2.serverType);
 
-            Node follower3 = new();
+            INode follower3 = new Node();
             follower3.BecomeDirectedFollower();
             follower3.directedVote = 1;
             follower3.responsive = false;
@@ -491,7 +491,7 @@ namespace Raft_5._2_Test_Scenarios
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(candidate);
             nodes.Add(follower);
             nodes.Add(follower2);
@@ -509,17 +509,17 @@ namespace Raft_5._2_Test_Scenarios
         {
             //17. When a follower node receives an AppendEntries request, it sends a response.
             // Testing #17
-            Node leader = new();
+            INode leader = new Node();
             leader.BecomeLeader();
             Assert.Equal("leader", leader.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeFollower();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(leader);
             nodes.Add(follower);
             cluster.runCluster(nodes);
@@ -534,11 +534,11 @@ namespace Raft_5._2_Test_Scenarios
         {
             //18. Given a candidate receives an AppendEntries from a previous term, then rejects.
             // Testing #18
-            Node leader = new();
+            INode leader = new Node();
             leader.BecomeLeader();
             Assert.Equal("leader", leader.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeFollower();
             //So that its in the next term
             follower.term = 1;
@@ -546,7 +546,7 @@ namespace Raft_5._2_Test_Scenarios
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(leader);
             nodes.Add(follower);
             cluster.runCluster(nodes);
@@ -561,17 +561,17 @@ namespace Raft_5._2_Test_Scenarios
         {
             //19. When a candidate wins an election, it immediately sends a heart beat.
             // Testing #19
-            Node leader = new();
+            INode leader = new Node();
             leader.BecomeLeader();
             Assert.Equal("leader", leader.serverType);
 
-            Node follower = new();
+            INode follower = new Node();
             follower.BecomeFollower();
             Assert.Equal("follower", follower.serverType);
 
             //When the cluster is running
             Cluster cluster = new();
-            List<Node> nodes = new List<Node>();
+            List<INode> nodes = new List<INode>();
             nodes.Add(leader);
             nodes.Add(follower);
             cluster.runCluster(nodes);

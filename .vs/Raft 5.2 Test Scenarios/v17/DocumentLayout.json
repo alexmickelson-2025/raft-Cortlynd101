@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 test scenarios\\rpctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|solutionrelative:raft 5.2 test scenarios\\rpctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7C042489-3114-493A-89A8-922EBDE1419B}|BlazorWebSimulation\\BlazorWebSimulation.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\blazorwebsimulation\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7C042489-3114-493A-89A8-922EBDE1419B}|BlazorWebSimulation\\BlazorWebSimulation.csproj|solutionrelative:blazorwebsimulation\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 class library\\election.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\election.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 test scenarios\\rpctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|solutionrelative:raft 5.2 test scenarios\\rpctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\raft 5.2 class library\\cluster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\cluster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7C042489-3114-493A-89A8-922EBDE1419B}|BlazorWebSimulation\\BlazorWebSimulation.csproj|c:\\users\\cort.cox\\source\\repos\\raft 5.2 test scenarios\\blazorwebsimulation\\simulationnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C042489-3114-493A-89A8-922EBDE1419B}|BlazorWebSimulation\\BlazorWebSimulation.csproj|solutionrelative:blazorwebsimulation\\simulationnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.razor",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\BlazorWebSimulation\\Pages\\Index.razor",
+              "RelativeDocumentMoniker": "BlazorWebSimulation\\Pages\\Index.razor",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\BlazorWebSimulation\\Pages\\Index.razor",
+              "RelativeToolTip": "BlazorWebSimulation\\Pages\\Index.razor",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-17T18:56:05.642Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -35,27 +48,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Cluster.cs",
-              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Cluster.cs",
-              "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Cluster.cs",
-              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Cluster.cs",
-              "RelativeToolTip": "Raft 5.2 Class Library\\Cluster.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAANAAAAAAAAAA==",
+              "Title": "SimulationNode.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\BlazorWebSimulation\\SimulationNode.cs",
+              "RelativeDocumentMoniker": "BlazorWebSimulation\\SimulationNode.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\BlazorWebSimulation\\SimulationNode.cs",
+              "RelativeToolTip": "BlazorWebSimulation\\SimulationNode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-17T02:43:50.08Z",
+              "WhenOpened": "2025-01-17T18:51:06.641Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Election.cs",
-              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Election.cs",
-              "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Election.cs",
-              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Election.cs",
-              "RelativeToolTip": "Raft 5.2 Class Library\\Election.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCEAAABOAAAAAAAAAA==",
+              "Title": "RPCTests.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "RelativeDocumentMoniker": "Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "RelativeToolTip": "Raft 5.2 Test Scenarios\\RPCTests.cs",
+              "ViewState": "AgIAAAgCAAAAAAAAAAAwwAcCAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-17T02:43:47.098Z",
+              "WhenOpened": "2025-01-16T22:53:05.713Z",
               "EditorCaption": ""
             },
             {
@@ -66,22 +79,9 @@
               "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Node.cs",
               "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Class Library\\Node.cs",
               "RelativeToolTip": "Raft 5.2 Class Library\\Node.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAABsAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAgwFcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-17T02:03:40.117Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RPCTests.cs",
-              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios\\RPCTests.cs",
-              "RelativeDocumentMoniker": "Raft 5.2 Test Scenarios\\RPCTests.cs",
-              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios\\RPCTests.cs",
-              "RelativeToolTip": "Raft 5.2 Test Scenarios\\RPCTests.cs",
-              "ViewState": "AgIAAAYBAAAAAAAAAAAowD0CAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T22:53:05.713Z",
               "EditorCaption": ""
             }
           ]

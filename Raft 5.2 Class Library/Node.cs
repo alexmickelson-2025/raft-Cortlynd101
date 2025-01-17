@@ -9,30 +9,30 @@ namespace Raft_5._2_Class_Library
 {
     public class Node : INode
     {
-        public int Id = 0;
-        public bool _vote = false;
-        public bool hasVoted = false;
-        public bool hasActed = false;
-        public string serverType = "follower";
-        public bool receivedHeartBeat = false;
-        public List<string> entries = [];
+        public int Id { get; set; } = 0;
+        public bool _vote { get; set; } = false;
+        public bool hasVoted { get; set; } = false;
+        public bool hasActed { get; set; } = false;
+        public string serverType { get; set; } = "follower";
+        public bool receivedHeartBeat { get; set; } = false;
+        public List<string> entries { get; set; } = [];
         public int leaderId { get; set; } = -1;
-        public int electionTimeout = 0;
-        public int voteCount = 0;
-        public bool responsive = true;
-        public int directedVote = 0;
-        public int term = 0;
-        public bool receivedResponse = false;
-        public bool recievedRPC = false;
-        public int votingFor = -1;
-        public int termVotedFor = 0;
-        public bool goFirst = false;
+        public int electionTimeout { get; set; } = 0;
+        public int voteCount { get; set; } = 0;
+        public bool responsive { get; set; } = true;
+        public int directedVote { get; set; } = 0;
+        public int term { get; set; } = 0;
+        public bool receivedResponse { get; set; } = false;
+        public bool recievedRPC { get; set; } = false;
+        public int votingFor { get; set; } = -1;
+        public int termVotedFor { get; set; } = 0;
+        public bool goFirst { get; set; } = false;
 
         public Node()
         {
         }
 
-        public void Vote(List<Node> nodes, int id)
+        public void Vote(List<INode> nodes, int id)
         {
             if (serverType == "leader")
             {
@@ -84,7 +84,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        public void Act(List<Node> nodes, int id, Election election)
+        public void Act(List<INode> nodes, int id, Election election)
         {
             Id = id;
             if (serverType == "leader")
@@ -108,7 +108,7 @@ namespace Raft_5._2_Class_Library
             hasActed = true;
         }
 
-        public void SendRPCs(Election election, List<Node> nodes)
+        public void SendRPCs(Election election, List<INode> nodes)
         {
             foreach (Node node in nodes)
             {
@@ -116,7 +116,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        private void receiveRPC(Election election, List<Node> nodes, int id, int sentTerm)
+        public void receiveRPC(Election election, List<INode> nodes, int id, int sentTerm)
         {
             if (serverType == "follower")
             {
@@ -130,7 +130,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        private void ElectionTimeout(Election election, List<Node> nodes)
+        public void ElectionTimeout(Election election, List<INode> nodes)
         {
             Random random = new();
             int randomNum = random.Next(150, 300);
@@ -143,7 +143,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        public void StartElection(Election election, List<Node> nodes)
+        public void StartElection(Election election, List<INode> nodes)
         {
             term++;
             election.electionOngoing = true;
@@ -151,7 +151,7 @@ namespace Raft_5._2_Class_Library
             election.runElection(nodes);
         }
 
-        public void AppendEntries(List<Node> nodes, int id)
+        public void AppendEntries(List<INode> nodes, int id)
         {
             Thread.Sleep(10);
             foreach (var node in nodes)
@@ -161,7 +161,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        private void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<Node> nodes)
+        public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<INode> nodes)
         {
             if (serverType == "leader")
             {
@@ -190,7 +190,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        public void SendHeartBeats(List<Node> nodes)
+        public void SendHeartBeats(List<INode> nodes)
         {
             Thread.Sleep(40);
             foreach (var node in nodes)
@@ -199,7 +199,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        public void SendHeartBeatsImmediately(List<Node> nodes)
+        public void SendHeartBeatsImmediately(List<INode> nodes)
         {
             foreach (var node in nodes)
             {
@@ -207,7 +207,7 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        private void ReceiveHeartBeat()
+        public void ReceiveHeartBeat()
         {
             receivedHeartBeat = true;
         }

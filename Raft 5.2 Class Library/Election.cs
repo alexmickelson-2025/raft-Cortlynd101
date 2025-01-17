@@ -13,7 +13,7 @@ namespace Raft_5._2_Class_Library
         public int term = 0;
         public int votesCast = 0;
 
-        public void runElection(List<Node> nodes)
+        public void runElection(List<INode> nodes)
         {
             electionOngoing = true;
 
