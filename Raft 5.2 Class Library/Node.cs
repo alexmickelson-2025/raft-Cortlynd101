@@ -9,6 +9,7 @@ namespace Raft_5._2_Class_Library
 {
     public class Node : INode
     {
+        public int Id = 0;
         public bool _vote = false;
         public bool hasVoted = false;
         public bool hasActed = false;
@@ -20,6 +21,12 @@ namespace Raft_5._2_Class_Library
         public int voteCount = 0;
         public bool responsive = true;
         public int directedVote = 0;
+        public int term = 0;
+        public bool receivedResponse = false;
+        public bool recievedRPC = false;
+        public int votingFor = -1;
+        public int termVotedFor = 0;
+        public bool goFirst = false;
 
         public Node()
         {
@@ -35,6 +42,12 @@ namespace Raft_5._2_Class_Library
             {
                 Random random = new();
                 int randomNum = random.Next(nodes.Count);
+
+                if (votingFor != -1)
+                {
+                    nodes[votingFor].voteCount++;
+                    return;
+                }
 
                 bool voting = true;
                 while (voting)
@@ -58,6 +71,7 @@ namespace Raft_5._2_Class_Library
                         }
                     }
                 }
+                hasVoted = true;
             }
             else if (serverType == "directedFollower")
             {
@@ -66,12 +80,13 @@ namespace Raft_5._2_Class_Library
             else
             {
                 voteCount++;
+                hasVoted = true;
             }
-            hasActed = true;
         }
 
         public void Act(List<Node> nodes, int id, Election election)
         {
+            Id = id;
             if (serverType == "leader")
             {
                 leaderId = id;
@@ -84,9 +99,35 @@ namespace Raft_5._2_Class_Library
             }
             else
             {
-                StartElection(election, nodes);
+                SendRPCs(election, nodes);
+                if (!election.electionOngoing)
+                {
+                    StartElection(election, nodes);
+                }
             }
             hasActed = true;
+        }
+
+        public void SendRPCs(Election election, List<Node> nodes)
+        {
+            foreach (Node node in nodes)
+            {
+                node.receiveRPC(election, nodes, Id, term);
+            }
+        }
+
+        private void receiveRPC(Election election, List<Node> nodes, int id, int sentTerm)
+        {
+            if (serverType == "follower")
+            {
+                if (sentTerm < term || termVotedFor >= sentTerm)
+                {
+                    return;
+                }
+
+                termVotedFor = sentTerm;
+                votingFor = id;
+            }
         }
 
         private void ElectionTimeout(Election election, List<Node> nodes)
@@ -104,30 +145,62 @@ namespace Raft_5._2_Class_Library
 
         public void StartElection(Election election, List<Node> nodes)
         {
+            term++;
             election.electionOngoing = true;
             election.term++;
             election.runElection(nodes);
         }
 
-        private void AppendEntries(List<Node> nodes, int id)
+        public void AppendEntries(List<Node> nodes, int id)
         {
             Thread.Sleep(10);
             foreach (var node in nodes)
             {
                 List<string> newEntries = ["1", "2"];
-                node.RecieveAppendEntries(entries, id);
+                node.RecieveAppendEntries(entries, id, term, nodes);
             }
         }
 
-        private void RecieveAppendEntries(List<string> newEntries, int id)
+        private void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<Node> nodes)
         {
-            entries = newEntries;
-            leaderId = id;
+            if (serverType == "leader")
+            {
+                receivedResponse = true;
+                return;
+            }
+
+            if (receivedTerm < term)
+            {
+                return;
+            }
+
+            if (serverType == "candidate")
+            {
+                entries = newEntries;
+                leaderId = id;
+                serverType = "follower";
+                return;
+            }
+
+            if (serverType == "follower")
+            {
+                entries = newEntries;
+                leaderId = id;
+                nodes[leaderId].RecieveAppendEntries(newEntries, leaderId, term, nodes);
+            }
         }
 
         public void SendHeartBeats(List<Node> nodes)
         {
             Thread.Sleep(40);
+            foreach (var node in nodes)
+            {
+                node.ReceiveHeartBeat();
+            }
+        }
+
+        public void SendHeartBeatsImmediately(List<Node> nodes)
+        {
             foreach (var node in nodes)
             {
                 node.ReceiveHeartBeat();
@@ -161,6 +234,10 @@ namespace Raft_5._2_Class_Library
         public void BecomeCandidate()
         {
             serverType = "candidate";
+        }
+        public void BecomeDirectedFollower()
+        {
+            serverType = "directedFollower";
         }
     }
 }

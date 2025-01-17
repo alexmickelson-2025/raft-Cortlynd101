@@ -31,11 +31,21 @@ namespace Raft_5._2_Class_Library
 
                 for (int i = 0; i < nodes.Count(); i++)
                 {
-                    if (nodes[i].voteCount > votesCast / 2)
+                    if (nodes[i].voteCount > votesCast / 2 || nodes[i].goFirst)
                     {
                         nodes[i].BecomeLeader();
+                        nodes[i].SendHeartBeatsImmediately(nodes);
+                        for (int j = 0; j < nodes.Count(); j++)
+                        {
+                            if (j != i)
+                            {
+                                nodes[j].BecomeFollower();
+                            }
+                        }
+                        break;
                     }
                 }
+
                 electionOngoing = false;
             }
         }
