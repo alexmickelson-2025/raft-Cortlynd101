@@ -9,6 +9,8 @@ namespace Raft_5._2_Class_Library
 {
     public class Node : INode
     {
+        public int delay { get; set; }
+        public int intervalScaler { get; set; }
         public int Id { get; set; } = 0;
         public bool _vote { get; set; } = false;
         public bool hasVoted { get; set; } = false;
@@ -34,6 +36,7 @@ namespace Raft_5._2_Class_Library
 
         public void Vote(List<INode> nodes, int id)
         {
+            hasVoted = false;
             if (serverType == "leader")
             {
 
@@ -89,13 +92,22 @@ namespace Raft_5._2_Class_Library
             Id = id;
             if (serverType == "leader")
             {
-                leaderId = id;
-                SendHeartBeats(nodes);
-                AppendEntries(nodes, id);
+                Random random = new();
+                int randomNum = random.Next(0, 10);
+                if (randomNum > 8)
+                {
+                    nodes[id].BecomeFollower();
+                }
+                else
+                {
+                    leaderId = id;
+                    SendHeartBeats(nodes);
+                    AppendEntries(nodes, id);
+                }
             }
             else if (serverType == "follower")
             {
-                ElectionTimeout(election, nodes);
+                ElectionTimeout(election, nodes, id);
             }
             else
             {
@@ -130,16 +142,35 @@ namespace Raft_5._2_Class_Library
             }
         }
 
-        public void ElectionTimeout(Election election, List<INode> nodes)
+        public void ElectionTimeout(Election election, List<INode> nodes, int id)
         {
-            Random random = new();
-            int randomNum = random.Next(150, 300);
-            electionTimeout = randomNum;
+            receivedHeartBeat = false;
+            
+            if(intervalScaler != 0)
+            {
+                ThreadLocal<Random> random = new(() => new Random());
+                int randomNum = random.Value.Next((150 * intervalScaler), (300 * intervalScaler));
+                electionTimeout = randomNum;
+            }
+            else
+            {
+                ThreadLocal<Random> random = new(() => new Random());
+                int randomNum = random.Value.Next(150, 300);
+                electionTimeout = randomNum;
+            }
 
             Thread.Sleep(electionTimeout);
             if (!receivedHeartBeat)
             {
-                StartElection(election, nodes);
+                leaderId = -1;
+                ThreadLocal<Random> random2 = new(() => new Random());
+                int randomNum2 = random2.Value.Next(0, 10);
+
+                if (randomNum2 < 5)
+                {
+                    nodes[id].BecomeCandidate();
+                    StartElection(election, nodes);
+                }
             }
         }
 
@@ -234,6 +265,7 @@ namespace Raft_5._2_Class_Library
         public void BecomeCandidate()
         {
             serverType = "candidate";
+            leaderId = Id;
         }
         public void BecomeDirectedFollower()
         {

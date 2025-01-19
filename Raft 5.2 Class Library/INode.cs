@@ -3,6 +3,8 @@ namespace Raft_5._2_Class_Library
 {
     public interface INode
     {
+        int delay { get; set; }
+        int intervalScaler { get; set; }
         bool _vote { get; set; }
         int directedVote { get; set; }
         int electionTimeout { get; set; }
@@ -28,7 +30,7 @@ namespace Raft_5._2_Class_Library
         void BecomeDirectedFollower();
         void BecomeFollower();
         void BecomeLeader();
-        void ElectionTimeout(Election election, List<INode> nodes);
+        void ElectionTimeout(Election election, List<INode> nodes, int id);
         bool IsElectionWinner();
         void ReceiveHeartBeat();
         void receiveRPC(Election election, List<INode> nodes, int id, int sentTerm);

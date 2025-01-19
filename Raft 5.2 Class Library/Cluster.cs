@@ -1,9 +1,9 @@
 ﻿namespace Raft_5._2_Class_Library
 {
-    public class Cluster
+    public class Cluster : ICluster
     {
-        bool clusterRunning = false;
-        public Election election = new();
+        public bool clusterRunning { get; set; } = false;
+        public Election election { get; set; } = new();
 
         public void runCluster(List<INode> nodes)
         {

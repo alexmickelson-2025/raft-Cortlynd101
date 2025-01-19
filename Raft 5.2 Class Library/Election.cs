@@ -7,11 +7,11 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Raft_5._2_Class_Library
 {
-    public class Election
+    public class Election : IElection
     {
-        public bool electionOngoing= false;
-        public int term = 0;
-        public int votesCast = 0;
+        public bool electionOngoing { get; set; } = false;
+        public int term { get; set; } = 0;
+        public int votesCast { get; set; } = 0;
 
         public void runElection(List<INode> nodes)
         {

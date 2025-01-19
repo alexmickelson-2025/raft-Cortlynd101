@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Raft 5.2 Test Scenarios")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e3b08481328b957eaf9a7c0c0d25242015ea8de")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79b1ef8e7450a05b1dd9b87720b50b3b615bcab4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Raft 5.2 Test Scenarios")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Raft 5.2 Test Scenarios")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
