@@ -29,6 +29,7 @@ namespace WebSimulation
         public int votingFor { get => ((INode)InnerNode).votingFor; set => ((INode)InnerNode).votingFor = value; }
         public int delay { get => ((INode)InnerNode).delay; set => ((INode)InnerNode).delay = value; }
         public int intervalScaler { get => ((INode)InnerNode).intervalScaler; set => ((INode)InnerNode).intervalScaler = value; }
+        public int[] log { get => ((INode)InnerNode).log; set => ((INode)InnerNode).log = value; }
 
         public void Act(List<INode> nodes, int id, Election election)
         {

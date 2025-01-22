@@ -23,6 +23,7 @@ namespace Raft_5._2_Class_Library
         int termVotedFor { get; set; }
         int voteCount { get; set; }
         int votingFor { get; set; }
+        int[] log { get; set; }
 
         void Act(List<INode> nodes, int id, Election election);
         void AppendEntries(List<INode> nodes, int id);

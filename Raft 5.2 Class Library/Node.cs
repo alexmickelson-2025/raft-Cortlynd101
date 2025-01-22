@@ -29,6 +29,7 @@ namespace Raft_5._2_Class_Library
         public int votingFor { get; set; } = -1;
         public int termVotedFor { get; set; } = 0;
         public bool goFirst { get; set; } = false;
+        public int[] log { get; set; } = [];
 
         public Node()
         {

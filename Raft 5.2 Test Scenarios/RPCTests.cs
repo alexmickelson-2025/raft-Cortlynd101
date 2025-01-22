@@ -580,5 +580,26 @@ namespace Raft_5._2_Test_Scenarios
             Thread.Sleep(0);
             Assert.True(follower.receivedHeartBeat);
         }
+
+        [Fact]
+        public void LeaderAppendsCommandLogWhenElected()
+        {
+            //Given an election is over
+            //When a node becomes leader
+            //Then it appends the command log
+            INode leader = new Node();
+            leader.BecomeLeader();
+            Assert.Equal("leader", leader.serverType);
+
+            //When the cluster is running
+            Cluster cluster = new();
+            List<INode> nodes = new List<INode>();
+            nodes.Add(leader);
+            cluster.runCluster(nodes);
+
+            //The leader should now have at least one log in their log list
+            Thread.Sleep(0);
+            Assert.True(leader.log.Length > 0);
+        }
     }
 }
