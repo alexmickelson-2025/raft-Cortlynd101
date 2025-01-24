@@ -5,272 +5,343 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Raft_5._2_Class_Library
+namespace Raft_5._2_Class_Library;
+
+public class Node : INode
 {
-    public class Node : INode
+    public int delay { get; set; }
+    public int intervalScaler { get; set; } = 0;
+    public int Id { get; set; } = 0;
+    public bool _vote { get; set; } = false;
+    public bool hasVoted { get; set; } = false;
+    public bool hasActed { get; set; } = false;
+    public string serverType { get; set; } = "follower";
+    public bool receivedHeartBeat { get; set; } = false;
+    public List<string> entries { get; set; } = [];
+    public int leaderId { get; set; } = -1;
+    public int electionTimeout { get; set; } = 0;
+    public int voteCount { get; set; } = 0;
+    public bool responsive { get; set; } = true;
+    public int directedVote { get; set; } = 0;
+    public int term { get; set; } = 0;
+    public bool receivedResponse { get; set; } = false;
+    public bool recievedRPC { get; set; } = false;
+    public int votingFor { get; set; } = -1;
+    public int termVotedFor { get; set; } = 0;
+    public bool goFirst { get; set; } = false;
+    public bool sentRPCs { get; set; } = false;
+    public bool forcedOutcome { get; set; } = false;
+    public Dictionary<int, string> log { get; set; } = new Dictionary<int, string>();
+    public List<int> nextIndex { get; set; } = [];
+    public int committedIndex { get; set; } = 0;
+    public int nodeCount { get; set; } = 0;
+    public int committedLogCount { get; set; } = 0;
+
+    public Node()
     {
-        public int delay { get; set; }
-        public int intervalScaler { get; set; }
-        public int Id { get; set; } = 0;
-        public bool _vote { get; set; } = false;
-        public bool hasVoted { get; set; } = false;
-        public bool hasActed { get; set; } = false;
-        public string serverType { get; set; } = "follower";
-        public bool receivedHeartBeat { get; set; } = false;
-        public List<string> entries { get; set; } = [];
-        public int leaderId { get; set; } = -1;
-        public int electionTimeout { get; set; } = 0;
-        public int voteCount { get; set; } = 0;
-        public bool responsive { get; set; } = true;
-        public int directedVote { get; set; } = 0;
-        public int term { get; set; } = 0;
-        public bool receivedResponse { get; set; } = false;
-        public bool recievedRPC { get; set; } = false;
-        public int votingFor { get; set; } = -1;
-        public int termVotedFor { get; set; } = 0;
-        public bool goFirst { get; set; } = false;
-        public int[] log { get; set; } = [];
+    }
 
-        public Node()
+    public void Vote(List<INode> nodes, int id)
+    {
+        hasVoted = false;
+        if (serverType == "leader")
         {
+
         }
-
-        public void Vote(List<INode> nodes, int id)
+        else if (serverType == "follower")
         {
-            hasVoted = false;
-            if (serverType == "leader")
-            {
+            Random random = new();
+            int randomNum = random.Next(nodes.Count);
 
+            if (votingFor != -1)
+            {
+                nodes[votingFor].voteCount++;
+                return;
             }
-            else if (serverType == "follower")
+
+            bool voting = true;
+            while (voting)
             {
-                Random random = new();
-                int randomNum = random.Next(nodes.Count);
-
-                if (votingFor != -1)
+                if (nodes[randomNum].serverType == "candidate")
                 {
-                    nodes[votingFor].voteCount++;
-                    return;
+                    nodes[randomNum].voteCount++;
+                    voting = false;
                 }
-
-                bool voting = true;
-                while (voting)
+                else
                 {
-                    if (nodes[randomNum].serverType == "candidate")
+                    if (randomNum > 0)
                     {
-                        nodes[randomNum].voteCount++;
+                        randomNum--;
                         voting = false;
                     }
                     else
                     {
-                        if (randomNum > 0)
-                        {
-                            randomNum--;
-                            voting = false;
-                        }
-                        else
-                        {
-                            randomNum++;
-                            voting = false;
-                        }
+                        randomNum++;
+                        voting = false;
                     }
                 }
-                hasVoted = true;
             }
-            else if (serverType == "directedFollower")
+            hasVoted = true;
+        }
+        else if (serverType == "directedFollower")
+        {
+            nodes[directedVote].voteCount++;
+        }
+        else
+        {
+            voteCount++;
+            hasVoted = true;
+        }
+    }
+
+    public void Act(List<INode> nodes, int id, Election election)
+    {
+        Id = id;
+        if (serverType == "leader")
+        {
+            Random random = new();
+            int randomNum = random.Next(0, 10);
+            if (randomNum > 8 && forcedOutcome == false)
             {
-                nodes[directedVote].voteCount++;
+                nodes[id].BecomeFollower();
             }
             else
             {
-                voteCount++;
-                hasVoted = true;
+                nodeCount = nodes.Count();
+                leaderId = id;
+                SendHeartBeats(nodes);
+                nodes[id].AppendEntries(nodes, id, committedIndex);
+                AttemptLogCommit(nodes, id, committedIndex);
+                SetNextIndex(nodes, id);   
             }
         }
-
-        public void Act(List<INode> nodes, int id, Election election)
+        else if (serverType == "follower")
         {
-            Id = id;
-            if (serverType == "leader")
+            ElectionTimeout(election, nodes, id);
+        }
+        else
+        {
+            SendRPCs(election, nodes);
+            if (!election.electionOngoing)
             {
-                Random random = new();
-                int randomNum = random.Next(0, 10);
-                if (randomNum > 8)
-                {
-                    nodes[id].BecomeFollower();
-                }
-                else
-                {
-                    leaderId = id;
-                    SendHeartBeats(nodes);
-                    AppendEntries(nodes, id);
-                }
+                StartElection(election, nodes);
             }
-            else if (serverType == "follower")
+        }
+        hasActed = true;
+    }
+
+    public void SendRPCs(Election election, List<INode> nodes)
+    {
+        sentRPCs = true;
+        foreach (Node node in nodes)
+        {
+            node.receiveRPC(election, nodes, Id, term);
+        }
+    }
+
+    public void receiveRPC(Election election, List<INode> nodes, int id, int sentTerm)
+    {
+        if (serverType == "follower")
+        {
+            if (sentTerm < term || termVotedFor >= sentTerm)
             {
-                ElectionTimeout(election, nodes, id);
+                return;
+            }
+
+            termVotedFor = sentTerm;
+            votingFor = id;
+        }
+    }
+
+    public void ElectionTimeout(Election election, List<INode> nodes, int id)
+    {
+        if (intervalScaler != 0)
+        {
+            ThreadLocal<Random> random = new(() => new Random());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            int randomNum = random.Value.Next((150 * intervalScaler), (300 * intervalScaler));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            electionTimeout = randomNum;
+        }
+        else
+        {
+            ThreadLocal<Random> random = new(() => new Random());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            int randomNum = random.Value.Next(150, 300);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            electionTimeout = randomNum;
+        }
+
+        Thread.Sleep(electionTimeout);
+        if (!receivedHeartBeat)
+        {
+            leaderId = -1;
+            ThreadLocal<Random> random2 = new(() => new Random());
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            int randomNum2 = random2.Value.Next(0, 10);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            if (randomNum2 < 5)
+            {
+                nodes[id].BecomeCandidate();
+                StartElection(election, nodes);
             }
             else
             {
-                SendRPCs(election, nodes);
-                if (!election.electionOngoing)
-                {
-                    StartElection(election, nodes);
-                }
-            }
-            hasActed = true;
-        }
-
-        public void SendRPCs(Election election, List<INode> nodes)
-        {
-            foreach (Node node in nodes)
-            {
-                node.receiveRPC(election, nodes, Id, term);
-            }
-        }
-
-        public void receiveRPC(Election election, List<INode> nodes, int id, int sentTerm)
-        {
-            if (serverType == "follower")
-            {
-                if (sentTerm < term || termVotedFor >= sentTerm)
-                {
-                    return;
-                }
-
-                termVotedFor = sentTerm;
-                votingFor = id;
-            }
-        }
-
-        public void ElectionTimeout(Election election, List<INode> nodes, int id)
-        {
-            receivedHeartBeat = false;
-            
-            if(intervalScaler != 0)
-            {
-                ThreadLocal<Random> random = new(() => new Random());
-                int randomNum = random.Value.Next((150 * intervalScaler), (300 * intervalScaler));
-                electionTimeout = randomNum;
-            }
-            else
-            {
-                ThreadLocal<Random> random = new(() => new Random());
-                int randomNum = random.Value.Next(150, 300);
-                electionTimeout = randomNum;
-            }
-
-            Thread.Sleep(electionTimeout);
-            if (!receivedHeartBeat)
-            {
-                leaderId = -1;
-                ThreadLocal<Random> random2 = new(() => new Random());
-                int randomNum2 = random2.Value.Next(0, 10);
-
-                if (randomNum2 < 5)
+                if (forcedOutcome)
                 {
                     nodes[id].BecomeCandidate();
                     StartElection(election, nodes);
                 }
             }
         }
+    }
 
-        public void StartElection(Election election, List<INode> nodes)
-        {
-            term++;
-            election.electionOngoing = true;
-            election.term++;
-            election.runElection(nodes);
-        }
+    public void StartElection(Election election, List<INode> nodes)
+    {
+        term++;
+        election.electionOngoing = true;
+        election.term++;
+        election.runElection(nodes);
+    }
 
-        public void AppendEntries(List<INode> nodes, int id)
+    public void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex)
+    {
+        sentRPCs = true;
+        Thread.Sleep(10);
+        foreach (var node in nodes)
         {
-            Thread.Sleep(10);
-            foreach (var node in nodes)
+            if (highestCommittedIndex <= log.Count() - 1)
             {
-                List<string> newEntries = ["1", "2"];
-                node.RecieveAppendEntries(entries, id, term, nodes);
+                for (int i = node.committedIndex + 1; i <= highestCommittedIndex; i++)
+                {
+                    if (!node.log.ContainsKey(i))
+                    {
+                        node.log.Add(i, log[i]);
+                    }
+                }
+                //Might need to do this multiple times?
+                nodes[id].RecieveLogCommit();
             }
-        }
-
-        public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<INode> nodes)
-        {
-            if (serverType == "leader")
+            else
             {
-                receivedResponse = true;
-                return;
+                node.log = log.ToDictionary(entry => entry.Key, entry => entry.Value);
             }
+            node.committedIndex = highestCommittedIndex;
+            node.RecieveAppendEntries(entries, id, term, nodes);
+        }
+    }
 
-            if (receivedTerm < term)
-            {
-                return;
-            }
-
-            if (serverType == "candidate")
-            {
-                entries = newEntries;
-                leaderId = id;
-                serverType = "follower";
-                return;
-            }
-
-            if (serverType == "follower")
-            {
-                entries = newEntries;
-                leaderId = id;
-                nodes[leaderId].RecieveAppendEntries(newEntries, leaderId, term, nodes);
-            }
+    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<INode> nodes)
+    {
+        if (serverType == "leader")
+        {
+            receivedResponse = true;
+            return;
         }
 
-        public void SendHeartBeats(List<INode> nodes)
+        if (receivedTerm < term)
         {
-            Thread.Sleep(40);
-            foreach (var node in nodes)
-            {
-                node.ReceiveHeartBeat();
-            }
+            return;
         }
 
-        public void SendHeartBeatsImmediately(List<INode> nodes)
+        if (serverType == "candidate")
         {
-            foreach (var node in nodes)
-            {
-                node.ReceiveHeartBeat();
-            }
-        }
-
-        public void ReceiveHeartBeat()
-        {
-            receivedHeartBeat = true;
-        }
-
-        public bool IsElectionWinner()
-        {
-            return _vote;
-        }
-
-        public bool Request()
-        {
-            return _vote;
-        }
-
-        public void BecomeFollower()
-        {
+            entries = newEntries;
+            leaderId = id;
             serverType = "follower";
+            return;
         }
 
-        public void BecomeLeader()
+        if (serverType == "follower")
         {
-            serverType = "leader";
+            entries = newEntries;
+            leaderId = id;
+            nodes[leaderId].RecieveAppendEntries(newEntries, leaderId, term, nodes);
         }
-        public void BecomeCandidate()
+    }
+
+    public void SendHeartBeats(List<INode> nodes)
+    {
+        Thread.Sleep(40);
+        foreach (var node in nodes)
         {
-            serverType = "candidate";
-            leaderId = Id;
+            node.ReceiveHeartBeat();
         }
-        public void BecomeDirectedFollower()
+    }
+
+    public void SendHeartBeatsImmediately(List<INode> nodes)
+    {
+        foreach (var node in nodes)
         {
-            serverType = "directedFollower";
+            node.ReceiveHeartBeat();
         }
+    }
+
+    public void ReceiveHeartBeat()
+    {
+        receivedHeartBeat = true;
+    }
+
+    public bool IsElectionWinner()
+    {
+        return _vote;
+    }
+
+    public bool Request()
+    {
+        return _vote;
+    }
+
+    public void BecomeFollower()
+    {
+        sentRPCs = false;
+        serverType = "follower";
+        receivedHeartBeat = false;
+    }
+
+    public void BecomeLeader()
+    {
+        serverType = "leader";
+        leaderId = leaderId;
+    }
+    public void BecomeCandidate()
+    {
+        sentRPCs = false;
+        serverType = "candidate";
+        leaderId = Id;
+        receivedHeartBeat = false;
+    }
+    public void BecomeDirectedFollower()
+    {
+        sentRPCs = false;
+        serverType = "directedFollower";
+    }
+
+    public void ReceiveCommand(int key, string value)
+    {
+        log.Add(key, value);
+    }
+
+    public void SetNextIndex(List<INode> nodes, int index)
+    {
+        foreach(var node in nodes)
+        {
+            nextIndex.Add(node.log.Count());
+        }
+    }
+
+    public void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex)
+    {
+        if (committedLogCount > (nodeCount / 2))
+        {
+            committedIndex++;
+            committedLogCount = 0;
+            nodes[id].AppendEntries(nodes, id, committedIndex);
+        }
+    }
+    public void RecieveLogCommit()
+    {
+        committedLogCount++;
     }
 }

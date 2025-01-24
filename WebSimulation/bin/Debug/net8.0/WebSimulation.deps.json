@@ -13,7 +13,10 @@
       },
       "Raft 5.2 Class Library/1.0.0": {
         "runtime": {
-          "Raft 5.2 Class Library.dll": {}
+          "Raft 5.2 Class Library.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

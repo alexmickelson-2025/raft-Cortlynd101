@@ -1,23 +1,21 @@
-﻿namespace Raft_5._2_Class_Library
+﻿namespace Raft_5._2_Class_Library;
+
+public class Cluster : ICluster
 {
-    public class Cluster : ICluster
+    public bool clusterRunning { get; set; } = false;
+    public Election election { get; set; } = new();
+
+    public void runCluster(List<INode> nodes)
     {
-        public bool clusterRunning { get; set; } = false;
-        public Election election { get; set; } = new();
+        clusterRunning = true;
 
-        public void runCluster(List<INode> nodes)
+        while (clusterRunning)
         {
-            clusterRunning = true;
-
-            while (clusterRunning)
+            for (int i = 0; i < nodes.Count(); i++)
             {
-                Thread.Sleep(10);
-                for (int i = 0; i < nodes.Count(); i++)
-                {
-                    nodes[i].Act(nodes, i, election);
-                }
-                clusterRunning = false;
+                nodes[i].Act(nodes, i, election);
             }
+            clusterRunning = false;
         }
     }
 }
