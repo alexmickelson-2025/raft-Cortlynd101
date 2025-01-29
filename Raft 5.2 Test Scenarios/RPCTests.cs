@@ -571,9 +571,9 @@ public class RPCTests
         nodes.Add(follower);
         cluster.runCluster(nodes);
 
-        //Then the follower appended its entries and rejects the false leader
+        //Then the follower appended its entries and rejects the false leader by making itself a candidate (so its leaderId will be 1)
         Thread.Sleep(50);
-        Assert.Equal(-1, follower.leaderId);
+        Assert.Equal(1, follower.leaderId);
     }
 
     [Fact]

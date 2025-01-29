@@ -36,13 +36,27 @@ public class Node : INode
     public int committedIndex { get; set; } = 0;
     public int nodeCount { get; set; } = 0;
     public int committedLogCount { get; set; } = 0;
+    public int receivedCommittedLogIndex { get; set; } = 0;
+    public int receivedCommittedTermIndex { get; set; } = 0;
+    public int previousIndex { get; set; } = 0;
+    public int previousTerm { get; set; } = 0;
 
     public Node()
     {
+        responsive = true;
+    }
+    public Node(bool responsiveOrNot)
+    {
+        responsive = responsiveOrNot;
     }
 
     public void Vote(List<INode> nodes, int id)
     {
+        if (responsive == false)
+        {
+            return;
+        }
+
         hasVoted = false;
         if (serverType == "leader")
         {
@@ -96,6 +110,12 @@ public class Node : INode
 
     public void Act(List<INode> nodes, int id, Election election)
     {
+        Thread.Sleep(10);
+        if (responsive == false)
+        {
+            return;
+        }
+
         Id = id;
         if (serverType == "leader")
         {
@@ -110,9 +130,9 @@ public class Node : INode
                 nodeCount = nodes.Count();
                 leaderId = id;
                 SendHeartBeats(nodes);
-                nodes[id].AppendEntries(nodes, id, committedIndex);
-                AttemptLogCommit(nodes, id, committedIndex);
-                SetNextIndex(nodes, id);   
+                nodes[id].AppendEntries(nodes, id, committedIndex, term, previousIndex, previousTerm);
+                AttemptLogCommit(nodes, id, committedIndex, term);
+                SetNextIndex(nodes, id);
             }
         }
         else if (serverType == "follower")
@@ -205,13 +225,14 @@ public class Node : INode
         election.runElection(nodes);
     }
 
-    public void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex)
+    public void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex, int term, int prevIndex, int prevTerm)
     {
         sentRPCs = true;
         Thread.Sleep(10);
         foreach (var node in nodes)
         {
-            if (highestCommittedIndex <= log.Count() - 1)
+            int logTimeDifference = highestCommittedIndex - node.committedIndex;
+            if (highestCommittedIndex <= log.Count() - 1 && node.responsive && logTimeDifference < 10 && highestCommittedIndex == term && prevIndex <= previousIndex && prevTerm <= previousTerm)
             {
                 for (int i = node.committedIndex + 1; i <= highestCommittedIndex; i++)
                 {
@@ -225,17 +246,29 @@ public class Node : INode
             }
             else
             {
-                node.log = log.ToDictionary(entry => entry.Key, entry => entry.Value);
+                if (node.responsive && logTimeDifference < 10 && highestCommittedIndex == term && prevIndex <= previousIndex && prevTerm <= previousTerm)
+                {
+                    node.log = log.ToDictionary(entry => entry.Key, entry => entry.Value);
+                }
             }
-            node.committedIndex = highestCommittedIndex;
-            node.RecieveAppendEntries(entries, id, term, nodes);
+
+            if (node.responsive && logTimeDifference < 10 && highestCommittedIndex == term && prevIndex <= previousIndex && prevTerm <= previousTerm)
+            {
+                previousIndex = node.committedIndex;
+                previousTerm = term;
+                node.receivedResponse = true;
+                node.committedIndex = highestCommittedIndex;
+                node.RecieveAppendEntries(entries, id, term, committedIndex, nodes);
+            }
         }
     }
 
-    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<INode> nodes)
+    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, int lastCommittedLogIndex, List<INode> nodes)
     {
         if (serverType == "leader")
         {
+            receivedCommittedLogIndex = lastCommittedLogIndex;
+            receivedCommittedTermIndex = receivedTerm;
             receivedResponse = true;
             return;
         }
@@ -257,7 +290,7 @@ public class Node : INode
         {
             entries = newEntries;
             leaderId = id;
-            nodes[leaderId].RecieveAppendEntries(newEntries, leaderId, term, nodes);
+            nodes[leaderId].RecieveAppendEntries(newEntries, leaderId, term, committedIndex, nodes);
         }
     }
 
@@ -266,7 +299,7 @@ public class Node : INode
         Thread.Sleep(40);
         foreach (var node in nodes)
         {
-            node.ReceiveHeartBeat();
+            node.ReceiveHeartBeat(committedIndex, term);
         }
     }
 
@@ -274,13 +307,26 @@ public class Node : INode
     {
         foreach (var node in nodes)
         {
-            node.ReceiveHeartBeat();
+            node.ReceiveHeartBeat(committedIndex, term);
         }
     }
 
-    public void ReceiveHeartBeat()
+    public void ReceiveHeartBeat(int newIndex, int newTerm)
     {
-        receivedHeartBeat = true;
+        if (newTerm < term)
+        {
+            return;
+        }
+
+        if (serverType != "leader")
+        {
+            if (newIndex >= previousIndex && newTerm >= previousTerm)
+            {
+                committedIndex = newIndex;
+                term = newTerm;
+            }
+            receivedHeartBeat = true;
+        }
     }
 
     public bool IsElectionWinner()
@@ -304,6 +350,7 @@ public class Node : INode
     {
         serverType = "leader";
         leaderId = leaderId;
+        receivedHeartBeat = false;
     }
     public void BecomeCandidate()
     {
@@ -325,23 +372,33 @@ public class Node : INode
 
     public void SetNextIndex(List<INode> nodes, int index)
     {
-        foreach(var node in nodes)
+        foreach (var node in nodes)
         {
             nextIndex.Add(node.log.Count());
         }
     }
 
-    public void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex)
+    public void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex, int term)
     {
         if (committedLogCount > (nodeCount / 2))
         {
+            term++;
             committedIndex++;
             committedLogCount = 0;
-            nodes[id].AppendEntries(nodes, id, committedIndex);
+            nodes[id].AppendEntries(nodes, id, committedIndex, term, previousIndex, previousTerm);
         }
     }
     public void RecieveLogCommit()
     {
         committedLogCount++;
+    }
+    public void Pause(List<INode> nodes, int id)
+    {
+        nodes[id].responsive = false;
+    }
+    public void UnPause(Cluster cluster, List<INode> nodes, int id)
+    {
+        nodes[id].responsive = true;
+        cluster.runCluster(nodes);
     }
 }

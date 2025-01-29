@@ -100,7 +100,13 @@ public class LogReplicationTests
 
         //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
         INode follower = Substitute.For<INode>();
-        follower.When(x => x.BecomeFollower()).Do(_ => follower.serverType = "follower");
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
         Assert.Equal("follower", follower.serverType);
@@ -128,7 +134,13 @@ public class LogReplicationTests
 
         //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
         INode follower = Substitute.For<INode>();
-        follower.When(x => x.BecomeFollower()).Do(_ => follower.serverType = "follower");
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
         Assert.Equal("follower", follower.serverType);
@@ -136,6 +148,8 @@ public class LogReplicationTests
         //The leader recieves a command
         leader.ReceiveCommand(0, "number one");
         leader.committedIndex++;
+        //We also have to add to the term so they stay in sync. This will be the case for all other times committedIndex is changed. 
+        leader.term++;
 
         //When the cluster is running
         Cluster cluster = new();
@@ -160,14 +174,21 @@ public class LogReplicationTests
 
         //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
         INode follower = Substitute.For<INode>();
-        follower.When(x => x.BecomeFollower()).Do(_ => follower.serverType = "follower");
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
         Assert.Equal("follower", follower.serverType);
 
         //The leader recieves a command
         leader.ReceiveCommand(0, "number one");
-        leader.committedIndex = 100;
+        leader.committedIndex = 2;
+        leader.term = 2;
 
         //When the cluster is running
         Cluster cluster = new();
@@ -176,9 +197,9 @@ public class LogReplicationTests
         nodes.Add(follower);
         cluster.runCluster(nodes);
 
-        //Then the first follower should have a committedIndex of 100 (because that's what we set the leaders to)
+        //Then the first follower should have a committedIndex of 2 (because that's what we set the leaders to)
         Thread.Sleep(300);
-        Assert.Equal(100, follower.committedIndex);
+        Assert.Equal(2, follower.committedIndex);
     }
     [Fact]
     public void FollowerLearnsEntryIsCommittedAppliesItToItselfTest()
@@ -197,6 +218,7 @@ public class LogReplicationTests
             follower.serverType = "follower";
             follower.committedIndex = 0;
             follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
         });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
@@ -208,8 +230,10 @@ public class LogReplicationTests
         leader.ReceiveCommand(1, "number two");
         //The leader recieves a command
         leader.ReceiveCommand(2, "number three");
-        //We add this to make it so the leader has one more committed entry then the follower (so the follower is behind)
+        //We add this to make it so the leader has one more committed entry then the follower (so the follower is behind).
         leader.committedIndex++;
+        leader.term++; 
+
 
         //When the cluster is running
         Cluster cluster = new();
@@ -243,6 +267,7 @@ public class LogReplicationTests
             follower.serverType = "follower";
             follower.committedIndex = 0;
             follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
         });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
@@ -255,6 +280,7 @@ public class LogReplicationTests
             follower2.serverType = "follower";
             follower2.committedIndex = 0;
             follower2.log = new Dictionary<int, string>();
+            follower2.responsive = true;
         });
         follower2.BecomeFollower();
         follower2.forcedOutcome = true;
@@ -300,6 +326,7 @@ public class LogReplicationTests
             follower.serverType = "follower";
             follower.committedIndex = 0;
             follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
         });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
@@ -312,6 +339,7 @@ public class LogReplicationTests
             follower2.serverType = "follower";
             follower2.committedIndex = 0;
             follower2.log = new Dictionary<int, string>();
+            follower2.responsive = true;
         });
         follower2.BecomeFollower();
         follower2.forcedOutcome = true;
@@ -352,6 +380,7 @@ public class LogReplicationTests
             follower.serverType = "follower";
             follower.committedIndex = 0;
             follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
         });
         follower.BecomeFollower();
         follower.forcedOutcome = true;
@@ -360,9 +389,11 @@ public class LogReplicationTests
         //The leader recieves a command
         leader.ReceiveCommand(0, "number one");
         leader.committedIndex++;
+        leader.term++;
         //The leader recieves a command
         leader.ReceiveCommand(1, "number two");
         leader.committedIndex++;
+        leader.term++;
 
         //When the cluster is running
         Cluster cluster = new();
@@ -377,21 +408,592 @@ public class LogReplicationTests
         Assert.Equal("number one", follower.log?[0]);
         Assert.Equal("number two", follower.log?[1]);
     }
+    [Fact]
+    public void FollowerRespondsWithTermNumberAndLogEntryIndexTest()
+    {
+        //11. A followers response to an AppendEntriesRPC includes the followers term number and log entry index
+        // Testing Logs #11
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
 
-    //11. A followers response to an AppendEntriesRPCincludes the followers term number and log entry index
-    //12. When a leader receives a majority responses from the clients after a log replication heartbeat, the leader sends a confirmation response to the client
-    //13. Given a leader node, when a log is committed, it applies it to its internal state machine
-    //14. When a follower receives a valid heartbeat, it increases its commitIndex to match the commit index of the heartbeat
-    //Reject the heartbeat if the previous log index / term number does not match your log
-    //15. When sending an AppendEntries RPC, the leader includes the index and term of the entry in its log that immediately precedes the new entries
-    //If the follower does not find an entry in its log with the same index and term, then it refuses the new entries
-    //Term must be same or newer
-    //If index is greater, it will be decreased by leader
-    //If index is less, we delete what we have
-    //If a follower rejects the AppendEntriesRPC, the leader decrements nextIndex and retries the AppendEntries RPC
-    //16. When a leader sends a heartbeat with a log, but does not receive responses from a majority of nodes, the entry is uncommitted
-    //17. If a leader does not response from a follower, the leader continues to send the log entries in subsequent heartbeats  
-    //18. If a leader cannot commit an entry, it does not send a response to the client
-    //19. If a node receives an AppendEntriesRPC with a logs that are too far in the future from your local state, you should reject the appendentries
-    //20. If a node receives and AppendEntriesRPC with a term and index that do not match, you will reject the appendentry until you find a matching log
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        leader.committedIndex++;
+        leader.term++;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the leader has received the commit index and the term index
+        Thread.Sleep(300);
+        Assert.Equal(1, leader.receivedCommittedLogIndex);
+        Assert.Equal(1, leader.receivedCommittedTermIndex);
+    }
+    [Fact]
+    public void LeaderSendsConfirmationResponseAfterLogReplicationTest()
+    {
+        //12. When a leader receives a majority responses from the clients after a log replication heartbeat, the leader sends a confirmation response to the client
+        // NOTE: I assumed he meant node right here instead of client?
+        // Testing Logs #12
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        leader.committedIndex++;
+        leader.term++;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the node should have received a response
+        Thread.Sleep(300);
+        Assert.True(follower.receivedResponse);
+    }
+    [Fact]
+    public void LeaderCommitsToInternalStateMachineTest()
+    {
+        //13. Given a leader node, when a log is committed, it applies it to its internal state machine
+        // Testing Logs #13
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        leader.committedIndex++;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the leader shoud've committed the log to its own machine
+        Thread.Sleep(300);
+        Assert.Equal(1, leader.log?.Count());
+        Assert.Equal("number one", leader.log?[0]);
+    }
+    [Fact]
+    public void FollowerMatchesCommitIndexIfItMatchesTest()
+    {
+        //14. When a follower receives a valid heartbeat, it increases its commitIndex to match the commit index of the heartbeat
+        //Reject the heartbeat if the previous log index / term number does not match your log
+        // Testing Logs #14
+        //This one tests for a correct match
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower should have updated its committedIndex to 1.
+        Thread.Sleep(300);
+        Assert.Equal(1, follower.committedIndex);
+    }
+    [Fact]
+    public void FollowerDoesntMatcheCommitIndexIfItDoesntMatchTest()
+    {
+        //14. When a follower receives a valid heartbeat, it increases its commitIndex to match the commit index of the heartbeat
+        //Reject the heartbeat if the previous log index / term number does not match your log
+        // Testing Logs #14
+        //This one tests for an incorrect match
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        //Offset the previousIndex and committedIndex by one so that they won't match correctly. 
+        leader.previousIndex--;
+        leader.committedIndex--;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower shouldnt have updated its committedIndex to 1, so it should still be 0.
+        Thread.Sleep(300);
+        Assert.Equal(0, follower.committedIndex);
+    }
+    [Fact]
+    public void LeaderSendsIndexAndTermFollowerRefusesIfItCantFindEntryTermLesserTest()
+    {
+        //15. When sending an AppendEntries RPC,the leader includes the index and term of the entry in its log that immediately precedes the new entries
+        //    If the follower does not find an entry in its log with the same index and term, then it refuses the new entries
+        //        Term must be same or newer
+        //        If index is greater, it will be decreased by leader
+        //        If index is less, we delete what we have
+        //    If a follower rejects the AppendEntriesRPC, the leader decrements nextIndex and retries the AppendEntries RPC
+        // Testing Logs #15
+        //This one tests if the term is lesser
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        //The term is one behind so it rejects it
+        leader.term--;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower shouldnt have updated its log or committedIndex because it rejects the AppendEntriesRPC.
+        Thread.Sleep(300);
+        Assert.Equal(0, follower.committedIndex);
+        Assert.Equal(0, follower.log?.Count());
+    }
+    [Fact]
+    public void LeaderSendsIndexAndTermFollowerRefusesIfItCantFindEntryIndexGreaterTest()
+    {
+        //15. When sending an AppendEntries RPC,the leader includes the index and term of the entry in its log that immediately precedes the new entries
+        //    If the follower does not find an entry in its log with the same index and term, then it refuses the new entries
+        //        Term must be same or newer
+        //        If index is greater, it will be decreased by leader
+        //        If index is less, we delete what we have
+        //    If a follower rejects the AppendEntriesRPC, the leader decrements nextIndex and retries the AppendEntries RPC
+        // Testing Logs #15
+        //This one tests if the index is greater
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        //The index is one ahead 
+        leader.previousIndex++;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower shouldnt have updated its log or committedIndex because it rejects the AppendEntriesRPC.
+        Thread.Sleep(300);
+        Assert.Equal(0, follower.committedIndex);
+        Assert.Equal(0, follower.log?.Count());
+    }
+    [Fact]
+    public void LeaderSendsIndexAndTermFollowerRefusesIfItCantFindEntryIndexLesserTest()
+    {
+        //15. When sending an AppendEntries RPC,the leader includes the index and term of the entry in its log that immediately precedes the new entries
+        //    If the follower does not find an entry in its log with the same index and term, then it refuses the new entries
+        //        Term must be same or newer
+        //        If index is greater, it will be decreased by leader
+        //        If index is less, we delete what we have
+        //    If a follower rejects the AppendEntriesRPC, the leader decrements nextIndex and retries the AppendEntries RPC
+        // Testing Logs #15
+        //This one tests if the index is lesser
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        //The index is one behind 
+        leader.previousIndex--;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower should have updated its log or committedIndex because it works with the AppendEntriesRPC.
+        Thread.Sleep(300);
+        Assert.Equal(1, follower.committedIndex);
+        Assert.Equal(1, follower.log?.Count());
+    }
+    [Fact]
+    public void LeaderSendsIndexAndTermFollowerRefusesIfItCantFindEntryNothingWrongTest()
+    {
+        //15. When sending an AppendEntries RPC,the leader includes the index and term of the entry in its log that immediately precedes the new entries
+        //    If the follower does not find an entry in its log with the same index and term, then it refuses the new entries
+        //        Term must be same or newer
+        //        If index is greater, it will be decreased by leader
+        //        If index is less, we delete what we have
+        //    If a follower rejects the AppendEntriesRPC, the leader decrements nextIndex and retries the AppendEntries RPC
+        // Testing Logs #15
+        //This one tests if nothing is wrong
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower should have updated its log because nothing is wrong with this one
+        Thread.Sleep(300);
+        Assert.Equal(1, follower.committedIndex);
+        Assert.Equal(1, follower.log?.Count());
+    }
+    [Fact]
+    public void EntryIsntCommittedWithoutMajorityTest()
+    {
+        //16. When a leader sends a heartbeat with a log, but does not receive responses from a majority of nodes, the entry is uncommitted
+        // Testing Logs #16
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = false;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //The follower is unresponsive, so the log shouldn't get committed. Thus the committedIndex should be 0.
+        Thread.Sleep(300);
+        Assert.Equal(0, leader.committedIndex);
+    }
+    [Fact]
+    public void LeaderStillSendsHeartbeatsEvenWithoutResponseTest()
+    {
+        //17. If a leader does not get a response from a follower, the leader continues to send the log entries in subsequent heartbeats  
+        // Testing Logs #17
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = false;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        INode follower2 = Substitute.For<INode>();
+        follower2.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower2.serverType = "follower";
+            follower2.committedIndex = 0;
+            follower2.log = new Dictionary<int, string>();
+            follower2.responsive = true;
+        });
+        follower2.BecomeFollower();
+        follower2.forcedOutcome = true;
+        Assert.Equal("follower", follower2.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        nodes.Add(follower2);
+        cluster.runCluster(nodes);
+
+        //The first follower is unresponsive, but the second one should still receive the log (even though the first isn't responsive).
+        Thread.Sleep(300);
+        Assert.Equal(1, follower2.log?.Count());
+        Assert.Equal("number one", follower2.log?[0]);
+
+        //The first follower shouldn't have received any log updates
+        Assert.Equal(0, follower.log?.Count());
+    }
+    [Fact]
+    public void LeaderDoesntRespondToClientWithoutACommitTest()
+    {
+        //18. If a leader cannot commit an entry, it does not send a response to the client
+        // Testing Logs #18
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = false;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower shouldnt of reveived a response because it is unresponsive and won't commit the log.
+        Thread.Sleep(300);
+        Assert.False(follower.receivedResponse);
+    }
+    [Fact]
+    public void NodeRejectsEntriesIfTheyreTooFarAheadTest()
+    {
+        //19. If a node receives an AppendEntriesRPC with logs that are too far in the future from your local state, you should reject the appendentries
+        // Testing Logs #19
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        //The leaders committedIndex is too far ahead (10 ahead or more)
+        leader.committedIndex = 10;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower shouldnt of committed the log so its commitedIndex should be 0 and the size of its log should be 0.
+        Thread.Sleep(300);
+        Assert.Equal(0, follower.committedIndex);
+        Assert.Equal(0, follower.log?.Count());
+    }
+    [Fact]
+    public void NodeRejectsIfTermAndIndexDontMatchTest()
+    {
+        //20. If a node receives an AppendEntriesRPC with a term and index that do not match, you will reject the appendentry until you find a matching log
+        // Testing Logs #20
+        INode leader = new Node();
+        leader.BecomeLeader();
+        leader.forcedOutcome = true;
+        Assert.Equal("leader", leader.serverType);
+
+        //Create all the followers as mocks in order to have only one real node per test (except the test that is just a follower)
+        INode follower = Substitute.For<INode>();
+        follower.When(x => x.BecomeFollower()).Do(_ =>
+        {
+            follower.serverType = "follower";
+            follower.committedIndex = 0;
+            follower.log = new Dictionary<int, string>();
+            follower.responsive = true;
+        });
+        follower.BecomeFollower();
+        follower.forcedOutcome = true;
+        Assert.Equal("follower", follower.serverType);
+
+        //The leader recieves a command
+        leader.ReceiveCommand(0, "number one");
+        //Offset the leaders committedIndex by 1 to make it so the term and index aren't the same. 
+        leader.committedIndex = 1;
+
+        //When the cluster is running
+        Cluster cluster = new();
+        List<INode> nodes = new List<INode>();
+        nodes.Add(leader);
+        nodes.Add(follower);
+        cluster.runCluster(nodes);
+
+        //Then the follower shouldnt have updated its log or committedIndex because it rejects the AppendEntriesRPC.
+        Thread.Sleep(300);
+        Assert.Equal(0, follower.committedIndex);
+        Assert.Equal(0, follower.log?.Count());
+    }
 }

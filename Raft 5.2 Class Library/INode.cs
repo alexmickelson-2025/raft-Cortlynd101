@@ -30,20 +30,26 @@ public interface INode
     int committedIndex { get; set; }
     int nodeCount { get; set; }
     int committedLogCount { get; set; }
+    int receivedCommittedLogIndex { get; set; }
+    int receivedCommittedTermIndex { get; set; }
+    int previousIndex { get; set; }
+    int previousTerm { get; set; }
 
+    void Pause(List<INode> nodes, int id);
+    void UnPause(Cluster cluster, List<INode> nodes, int id);
     void ReceiveCommand(int key, string value);
-    void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex);
+    void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex, int term);
     void Act(List<INode> nodes, int id, Election election);
-    void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex);
+    void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex, int term, int prevIndex, int prevTerm);
     void BecomeCandidate();
     void BecomeDirectedFollower();
     void BecomeFollower();
     void BecomeLeader();
     void ElectionTimeout(Election election, List<INode> nodes, int id);
     bool IsElectionWinner();
-    void ReceiveHeartBeat();
+    void ReceiveHeartBeat(int newIndex, int newTerm);
     void receiveRPC(Election election, List<INode> nodes, int id, int sentTerm);
-    void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<INode> nodes);
+    void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, int lastCommittedLogIndex, List<INode> nodes);
     bool Request();
     void SendHeartBeats(List<INode> nodes);
     void SendHeartBeatsImmediately(List<INode> nodes);

@@ -36,20 +36,24 @@ public class SimulationNode : INode
     public Dictionary<int, string> log { get => ((INode)InnerNode).log; set => ((INode)InnerNode).log = value; }
     public int nodeCount { get => ((INode)InnerNode).nodeCount; set => ((INode)InnerNode).nodeCount = value; }
     public int committedLogCount { get => ((INode)InnerNode).committedLogCount; set => ((INode)InnerNode).committedLogCount = value; }
+    public int receivedCommittedLogIndex { get => ((INode)InnerNode).receivedCommittedLogIndex; set => ((INode)InnerNode).receivedCommittedLogIndex = value; }
+    public int receivedCommittedTermIndex { get => ((INode)InnerNode).receivedCommittedTermIndex; set => ((INode)InnerNode).receivedCommittedTermIndex = value; }
+    public int previousIndex { get => ((INode)InnerNode).previousIndex; set => ((INode)InnerNode).previousIndex = value; }
+    public int previousTerm { get => ((INode)InnerNode).previousTerm; set => ((INode)InnerNode).previousTerm = value; }
 
     public void Act(List<INode> nodes, int id, Election election)
     {
         ((INode)InnerNode).Act(nodes, id, election);
     }
 
-    public void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex)
+    public void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex, int term, int prevIndex, int prevTerm)
     {
-        ((INode)InnerNode).AppendEntries(nodes, id, highestCommittedIndex);
+        ((INode)InnerNode).AppendEntries(nodes, id, highestCommittedIndex, term, prevIndex, prevTerm);
     }
 
-    public void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex)
+    public void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex, int term)
     {
-        ((INode)InnerNode).AttemptLogCommit(nodes, id, highestCommittedIndex);
+        ((INode)InnerNode).AttemptLogCommit(nodes, id, highestCommittedIndex, term);
     }
 
     public void BecomeCandidate()
@@ -82,14 +86,19 @@ public class SimulationNode : INode
         return ((INode)InnerNode).IsElectionWinner();
     }
 
+    public void Pause(List<INode> nodes, int id)
+    {
+        ((INode)InnerNode).Pause(nodes, id);
+    }
+
     public void ReceiveCommand(int key, string value)
     {
         ((INode)InnerNode).ReceiveCommand(key, value);
     }
 
-    public void ReceiveHeartBeat()
+    public void ReceiveHeartBeat(int newIndex, int newTerm)
     {
-        ((INode)InnerNode).ReceiveHeartBeat();
+        ((INode)InnerNode).ReceiveHeartBeat(newIndex, newTerm);
     }
 
     public void receiveRPC(Election election, List<INode> nodes, int id, int sentTerm)
@@ -97,9 +106,9 @@ public class SimulationNode : INode
         ((INode)InnerNode).receiveRPC(election, nodes, id, sentTerm);
     }
 
-    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, List<INode> nodes)
+    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, int commitIndex, List<INode> nodes)
     {
-        ((INode)InnerNode).RecieveAppendEntries(newEntries, id, receivedTerm, nodes);
+        ((INode)InnerNode).RecieveAppendEntries(newEntries, id, receivedTerm, commitIndex, nodes);
     }
 
     public void RecieveLogCommit()
@@ -135,6 +144,11 @@ public class SimulationNode : INode
     public void StartElection(Election election, List<INode> nodes)
     {
         ((INode)InnerNode).StartElection(election, nodes);
+    }
+
+    public void UnPause(Cluster cluster, List<INode> nodes, int id)
+    {
+        ((INode)InnerNode).UnPause(cluster, nodes, id);
     }
 
     public void Vote(List<INode> nodes, int id)
