@@ -26,7 +26,7 @@ namespace Raft_5._2_Test_Scenarios;
 public class MiscTests
 {
     [Fact]
-    public void PausedLeaderDoesntSendHeartbeatAfter400ms()
+    public void PausedLeaderDoesntSendHeartbeatAfter400msTest()
     {
         //1. When a node is a leader with an election loop, then they get paused, other nodes do not get heartbeats for 400ms
         // Testing Pause #1
@@ -57,7 +57,7 @@ public class MiscTests
     }
 
     [Fact]
-    public void PausedLeaderDoesSendHeartbeatIfPausedThenUnpaused()
+    public void PausedLeaderDoesSendHeartbeatIfPausedThenUnpausedTest()
     {
         //2. When a node is a leader with an election loop, then they get paused, other nodes do not get heartbeats for 400ms
         //Then they get un-paused and heartbeats resume
@@ -89,15 +89,49 @@ public class MiscTests
         Assert.True(follower.receivedHeartBeat);
     }
     //[Fact]
-    //public void PausedLeaderDoesSendHeartbeatIfPausedThenUnpaused()
+    //public void FollowerGetsPausedDoesntBecomeCandidateTest()
     //{
     //    //3. When a follower gets paused, it does not time out to become a candidate
     //    // Testing Pause #3
+    //    INode follower = new Node();
+    //    follower.BecomeFollower();
+    //    Assert.Equal("follower", follower.serverType);
+
+    //    //When the cluster is running
+    //    Cluster cluster = new();
+    //    List<INode> nodes = new List<INode>();
+    //    nodes.Add(follower);
+    //    cluster.runCluster(nodes);
+
+    //    //And the follower is paused
+    //    follower.Pause(nodes, follower.Id);
+
+    //    //Then the follower shouldn't have become a candidate
+    //    Thread.Sleep(100);
+    //    Assert.Equal("follower", follower.serverType);
     //}
     //[Fact]
-    //public void PausedLeaderDoesSendHeartbeatIfPausedThenUnpaused()
+    //public void FollowerGetsUnpausedBecomesCandidateTest()
     //{
     //    //4. When a follower gets unpaused, it will eventually become a candidate.
     //    // Testing Pause #4
+    //    INode follower = new Node();
+    //    follower.BecomeFollower();
+    //    Assert.Equal("follower", follower.serverType);
+
+    //    //When the cluster is running
+    //    Cluster cluster = new();
+    //    List<INode> nodes = new List<INode>();
+    //    nodes.Add(follower);
+    //    cluster.runCluster(nodes);
+
+    //    //And the leader is not responsive
+    //    follower.Pause(nodes, follower.Id);
+
+    //    //Then the follower shouldn't receive a heartbeat after 50ms
+    //    follower.UnPause(cluster, nodes, follower.Id);
+
+    //    Thread.Sleep(100);
+    //    Assert.Equal("candidate", follower.serverType);
     //}
 }

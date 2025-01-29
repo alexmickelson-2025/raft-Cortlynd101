@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raft 5.2 test scenarios\\logreplicationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|solutionrelative:raft 5.2 test scenarios\\logreplicationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6E8A587-8261-477B-9688-0AF80DFC5031}|RaftAPI\\RaftAPI.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raftapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6E8A587-8261-477B-9688-0AF80DFC5031}|RaftAPI\\RaftAPI.csproj|solutionrelative:raftapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E4C387F4-A306-4EE8-8F9B-7622E688274E}|WebSimulation\\WebSimulation.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\websimulation\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4C387F4-A306-4EE8-8F9B-7622E688274E}|WebSimulation\\WebSimulation.csproj|solutionrelative:websimulation\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E4C387F4-A306-4EE8-8F9B-7622E688274E}|WebSimulation\\WebSimulation.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\websimulation\\simulationnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E4C387F4-A306-4EE8-8F9B-7622E688274E}|WebSimulation\\WebSimulation.csproj|solutionrelative:websimulation\\simulationnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raft 5.2 test scenarios\\logreplicationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|solutionrelative:raft 5.2 test scenarios\\logreplicationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raft 5.2 test scenarios\\misctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{552035A0-BF0C-4765-A0F5-99F21C93D0E3}|Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj|solutionrelative:raft 5.2 test scenarios\\misctests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|solutionrelative:raft 5.2 class library\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CD70A26B-61EF-4794-8C13-3F120492B8AE}|Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj|c:\\users\\cort.cox\\source\\repos\\raft-cortlynd101\\raft 5.2 class library\\inode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,8 +50,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\RaftAPI\\Program.cs",
+              "RelativeDocumentMoniker": "RaftAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\RaftAPI\\Program.cs",
+              "RelativeToolTip": "RaftAPI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-29T17:53:20.27Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -62,6 +87,32 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\WebSimulation\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "WebSimulation\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\WebSimulation\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "WebSimulation\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-29T17:49:36.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MiscTests.cs",
+              "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\MiscTests.cs",
+              "RelativeDocumentMoniker": "Raft 5.2 Test Scenarios\\MiscTests.cs",
+              "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\MiscTests.cs",
+              "RelativeToolTip": "Raft 5.2 Test Scenarios\\MiscTests.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAswGMAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-29T17:39:19.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "SimulationNode.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\WebSimulation\\SimulationNode.cs",
@@ -75,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Election.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Class Library\\Election.cs",
               "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Election.cs",
@@ -83,12 +134,11 @@
               "RelativeToolTip": "Raft 5.2 Class Library\\Election.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-24T17:55:19.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-24T17:55:19.247Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Cluster.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Class Library\\Cluster.cs",
               "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Cluster.cs",
@@ -100,7 +150,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "INode.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Class Library\\INode.cs",
               "RelativeDocumentMoniker": "Raft 5.2 Class Library\\INode.cs",
@@ -108,12 +158,11 @@
               "RelativeToolTip": "Raft 5.2 Class Library\\INode.cs",
               "ViewState": "AgIAACYAAAAAAAAAAIA8wCoAAAByAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-23T21:29:29.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-23T21:29:29.897Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Node.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Class Library\\Node.cs",
               "RelativeDocumentMoniker": "Raft 5.2 Class Library\\Node.cs",
@@ -121,25 +170,24 @@
               "RelativeToolTip": "Raft 5.2 Class Library\\Node.cs",
               "ViewState": "AgIAAFwBAAAAAAAAAAAwwPsAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-23T21:31:17.674Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-23T21:31:17.674Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "LogReplicationTests.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\LogReplicationTests.cs",
               "RelativeDocumentMoniker": "Raft 5.2 Test Scenarios\\LogReplicationTests.cs",
               "ToolTip": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\LogReplicationTests.cs",
               "RelativeToolTip": "Raft 5.2 Test Scenarios\\LogReplicationTests.cs",
-              "ViewState": "AgIAAKUDAAAAAAAAAAAuwK8DAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAK4DAAAAAAAAAAAuwMIDAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-29T00:30:19.086Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "RPCTests.cs",
               "DocumentMoniker": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\RPCTests.cs",
               "RelativeDocumentMoniker": "Raft 5.2 Test Scenarios\\RPCTests.cs",
@@ -147,8 +195,7 @@
               "RelativeToolTip": "Raft 5.2 Test Scenarios\\RPCTests.cs",
               "ViewState": "AgIAACQCAAAAAAAAAADgvz0CAACGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-29T04:51:14.093Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-29T04:51:14.093Z"
             }
           ]
         },

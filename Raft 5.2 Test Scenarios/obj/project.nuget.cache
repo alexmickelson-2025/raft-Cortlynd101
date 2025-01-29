@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8C6az9ceWIY=",
+  "dgSpecHash": "MIqXebHl3FE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
+  "projectFilePath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cort.cox\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\cort.cox\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",

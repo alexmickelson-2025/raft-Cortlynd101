@@ -28,6 +28,7 @@ public class LogReplicationTests
     [Fact]
     public void LeaderReceivesCommandSendsLogEntryInAppendEntriesRPCTest()
     {
+        //TODO: Test 1, how are we sure that the leader is sending the logs in the test?
         //1. When a leader receives a client command the leader sends the log entry in the next AppendEntriesRPC to all nodes
         // Testing Logs #1
         INode leader = new Node();
@@ -959,6 +960,7 @@ public class LogReplicationTests
     [Fact]
     public void NodeRejectsIfTermAndIndexDontMatchTest()
     {
+        //TODO: Test 20, how are you sure that the leader eventually finds a matching request?
         //20. If a node receives an AppendEntriesRPC with a term and index that do not match, you will reject the appendentry until you find a matching log
         // Testing Logs #20
         INode leader = new Node();
