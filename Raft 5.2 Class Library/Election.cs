@@ -34,6 +34,10 @@ public class Election : IElection
                 if (nodes[i].voteCount > votesCast / 2 || nodes[i].goFirst)
                 {
                     nodes[i].BecomeLeader();
+                    foreach (var node in nodes)
+                    {
+                        node.thereIsACandidate = false;
+                    }
                     nodes[i].SendHeartBeatsImmediately(nodes);
                     for (int j = 0; j < nodes.Count(); j++)
                     {

@@ -40,6 +40,7 @@ public class Node : INode
     public int receivedCommittedTermIndex { get; set; } = 0;
     public int previousIndex { get; set; } = 0;
     public int previousTerm { get; set; } = 0;
+    public bool thereIsACandidate { get; set; } = false;
 
     public Node()
     {
@@ -120,8 +121,8 @@ public class Node : INode
         if (serverType == "leader")
         {
             Random random = new();
-            int randomNum = random.Next(0, 10);
-            if (randomNum > 8 && forcedOutcome == false)
+            int randomNum = random.Next(0, 100);
+            if (randomNum > 100 && forcedOutcome == false)
             {
                 nodes[id].BecomeFollower();
             }
@@ -201,14 +202,18 @@ public class Node : INode
             int randomNum2 = random2.Value.Next(0, 10);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            if (randomNum2 < 5)
+            if (randomNum2 < 11 && !thereIsACandidate)
             {
                 nodes[id].BecomeCandidate();
+                foreach (var node in nodes)
+                {
+                    node.thereIsACandidate = true;
+                }
                 StartElection(election, nodes);
             }
             else
             {
-                if (forcedOutcome)
+                if (forcedOutcome && !thereIsACandidate)
                 {
                     nodes[id].BecomeCandidate();
                     StartElection(election, nodes);
@@ -400,5 +405,17 @@ public class Node : INode
     {
         nodes[id].responsive = true;
         cluster.runCluster(nodes);
+    }
+    public bool Set(string value)
+    {
+        int key = committedLogCount;
+        committedLogCount++;
+        if (serverType != "leader" || value is null)
+        {
+            return false; 
+        }
+
+        ReceiveCommand(key, value);
+        return true;
     }
 }

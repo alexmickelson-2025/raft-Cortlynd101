@@ -1,18 +1,19 @@
 ﻿@page "/"
 @using Raft_5._2_Class_Library;
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-<button @onclick="startSimulation">start</button>
+<button @onclick="startSimulation">Start Simulation</button>
 <div>
     <label for="speed">
         Election timeout: @IntervalScaler
         <br>
         <input type="range" id="speed" name="speed" min="1" max="5" @bind:event="oninput"
-               @bind=IntervalScaler @onchange=UpdateIntervalScaler />
+        @bind=IntervalScaler @onchange=UpdateIntervalScaler />
     </label>
 </div>
 <div>
@@ -43,7 +44,49 @@
                 Node they think is the leader: @node.leaderId
             </div>
             <div>
-                @* <button @onclick="() => Pause(nodes, node.Id)">Pause</button> *@
+                State: 
+                @if (node.responsive)
+                {
+                    <div>
+                        Responsive.
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        Unresponsive.
+                    </div>
+                }
+            </div>
+            <div>
+                Commit index: @node.committedIndex
+            </div>
+            <div>
+                Log entries:
+                @foreach(var log in node.log)
+                {
+                    <div class="row border p-3 rounded-3">
+                        <div>
+                            Log index: @log.Key
+                        </div>
+                        <div>
+                            Term id: @log.Key
+                        </div>
+                        <div>
+                            Log value: @log.Value
+                        </div>
+                        <div>
+                            Log committed: @(log.Key >= node.committedIndex)
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="border p-3 rounded-3">
+                <input type="text" id="value" name="value" @bind:event="oninput" @bind=value />
+                <button @onclick="() => Set(node.Id, value)">Set Next Log Entry</button>
+            </div>
+            <div class="border p-3 rounded-3">
+                <button @onclick="() => TogglePause(node.Id)">Toggle Pause</button>
             </div>
         </div>
     </div>
@@ -52,9 +95,10 @@
 @code {
     public int IntervalScaler = 0;
     public int delay = 0;
+    public string value = "";
     private Timer? timer;
-    SimulationCluster cluster = new(new Cluster());
-    List<INode> nodes = [];
+    public SimulationCluster cluster = new(new Cluster());
+    public List<INode> nodes = [];
     void startSimulation()
     {
         var node1 = new Node();
@@ -83,6 +127,23 @@
         foreach(var node in nodes)
         {
             node.intervalScaler = IntervalScaler;
+        }
+    }
+    private async void Set(int id, string value)
+    {
+        string message = $"Node response: {nodes[id].Set(value)}";
+        await JS.InvokeVoidAsync("alert", message);
+        return;
+    }
+    private void TogglePause(int id)
+    {
+        if (nodes[id].responsive)
+        {
+            nodes[id].Pause(nodes, id);
+        }
+        else
+        {
+            nodes[id].UnPause(cluster.InnerCluster, nodes, id);
         }
     }
 }

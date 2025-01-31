@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "nWHJxjGOWxKlim8kwZWzlqxRK4tk8opJX3FWpfpJAjo=",
+  "Hash": "xf2TUAlRM8iS8tydIG38adwmgUxXiWz4fygotrnFY3U=",
   "Source": "WebSimulation",
   "BasePath": "_content/WebSimulation",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "WebSimulation\\wwwroot",
       "Source": "WebSimulation",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\",
       "BasePath": "_content/WebSimulation",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css",
+      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css",
       "SourceId": "WebSimulation",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/WebSimulation",
       "RelativePath": "WebSimulation#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -35,13 +35,13 @@
       "Integrity": "tUWSDIlQFeZfhkrzwaSlH41lCeAR++m9gUK9yMoHj0I=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css"
+      "OriginalItemSpec": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css"
     },
     {
-      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css",
+      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css",
       "SourceId": "WebSimulation",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/WebSimulation",
       "RelativePath": "WebSimulation#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
@@ -56,13 +56,13 @@
       "Integrity": "tUWSDIlQFeZfhkrzwaSlH41lCeAR++m9gUK9yMoHj0I=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\app.css",
       "SourceId": "WebSimulation",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\",
       "BasePath": "_content/WebSimulation",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -80,10 +80,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "WebSimulation",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\",
       "BasePath": "_content/WebSimulation",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -101,10 +101,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "WebSimulation",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\",
       "BasePath": "_content/WebSimulation",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -122,10 +122,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\favicon.png",
       "SourceId": "WebSimulation",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\",
       "BasePath": "_content/WebSimulation",
       "RelativePath": "favicon#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -146,7 +146,7 @@
   "Endpoints": [
     {
       "Route": "app.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -167,7 +167,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -183,7 +183,7 @@
     },
     {
       "Route": "app.da95v2qkru.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -204,7 +204,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -228,7 +228,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -249,7 +249,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -273,7 +273,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -294,7 +294,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -310,7 +310,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -331,7 +331,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -355,7 +355,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -376,7 +376,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -392,7 +392,7 @@
     },
     {
       "Route": "favicon.ifv42okdf2.png",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -413,7 +413,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -437,7 +437,7 @@
     },
     {
       "Route": "favicon.png",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -458,7 +458,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -474,7 +474,7 @@
     },
     {
       "Route": "WebSimulation.bundle.scp.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -495,7 +495,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -511,7 +511,7 @@
     },
     {
       "Route": "WebSimulation.styles.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -532,7 +532,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -548,7 +548,7 @@
     },
     {
       "Route": "WebSimulation.tu2hp5b2mm.bundle.scp.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebSimulation.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -569,7 +569,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -593,7 +593,7 @@
     },
     {
       "Route": "WebSimulation.tu2hp5b2mm.styles.css",
-      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css",
+      "AssetFile": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-2\\WebSimulation\\obj\\Debug\\net8.0\\scopedcss\\bundle\\WebSimulation.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -614,7 +614,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 18:47:09 GMT"
+          "Value": "Thu, 30 Jan 2025 21:51:02 GMT"
         },
         {
           "Name": "Cache-Control",

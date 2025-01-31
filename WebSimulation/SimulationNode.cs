@@ -40,6 +40,7 @@ public class SimulationNode : INode
     public int receivedCommittedTermIndex { get => ((INode)InnerNode).receivedCommittedTermIndex; set => ((INode)InnerNode).receivedCommittedTermIndex = value; }
     public int previousIndex { get => ((INode)InnerNode).previousIndex; set => ((INode)InnerNode).previousIndex = value; }
     public int previousTerm { get => ((INode)InnerNode).previousTerm; set => ((INode)InnerNode).previousTerm = value; }
+    public bool thereIsACandidate { get => ((INode)InnerNode).thereIsACandidate; set => ((INode)InnerNode).thereIsACandidate = value; }
 
     public void Act(List<INode> nodes, int id, Election election)
     {
@@ -134,6 +135,11 @@ public class SimulationNode : INode
     public void SendRPCs(Election election, List<INode> nodes)
     {
         ((INode)InnerNode).SendRPCs(election, nodes);
+    }
+
+    public bool Set(string value)
+    {
+        return ((INode)InnerNode).Set(value);
     }
 
     public void SetNextIndex(List<INode> nodes, int index)

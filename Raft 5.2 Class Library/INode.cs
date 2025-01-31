@@ -34,7 +34,9 @@ public interface INode
     int receivedCommittedTermIndex { get; set; }
     int previousIndex { get; set; }
     int previousTerm { get; set; }
+    bool thereIsACandidate { get; set; }
 
+    bool Set(string value);
     void Pause(List<INode> nodes, int id);
     void UnPause(Cluster cluster, List<INode> nodes, int id);
     void ReceiveCommand(int key, string value);
