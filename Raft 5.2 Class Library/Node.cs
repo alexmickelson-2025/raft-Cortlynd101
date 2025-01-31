@@ -111,6 +111,7 @@ public class Node : INode
 
     public void Act(List<INode> nodes, int id, Election election)
     {
+        Console.WriteLine("This node is a: "+ nodes[id].serverType);
         Thread.Sleep(10);
         if (responsive == false)
         {
