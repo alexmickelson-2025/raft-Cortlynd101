@@ -56,3 +56,20 @@ services:
       timeout: 3s
       retries: 3
       start_period: 3s
+
+  client:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    working_dir: /app
+    user: 1000:100
+    volumes:
+      - ./:/app
+    environment:
+      # - NODE_ID=3
+      # - OTHER_NODES=1,http://node1:8080;2,http://node2:8080
+      # - NODE_INTERVAL_SCALAR=50
+      - NODE_URLS=http://node1.8080,http://node2.8080,http://node3.8080
+    command: dotnet watch --project RaftClient
+    ports:
+    - 5000:8080

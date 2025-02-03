@@ -1,0 +1,34 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using System.Collections.Concurrent
+
+<PageTitle>Home</PageTitle>
+
+<div>
+    @if (Urls is not null)
+    {
+        foreach(var url in Urls)
+        {
+            <div>
+                @url.ToString();
+            </div>
+        }
+    }
+</div>>
+
+@code {
+    HttpClient http = new HttpClient();
+
+    string[] Urls = Environment.GetEnvironmentVariable("NODE_URLS").Split(',');
+    @* ConcurrentDictionary<string, NodeData> data = new();
+    
+    string StateClass(NodeDate node)
+    {
+        if(node.Status == NodeStatus.Leader)
+        {
+
+        }
+    } *@
+
+
+}
