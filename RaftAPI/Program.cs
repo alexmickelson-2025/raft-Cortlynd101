@@ -56,20 +56,20 @@ timer = new Timer(_ =>
 
 app.MapGet("/health", () => "healthy");
 
-// app.MapGet("/nodeData", () =>
-// {
-//   return new NodeData(
-//     Id: node.Id,
-//     Status: node.Status,
-//     ElectionTimeout: node.ElectionTimeout,
-//     Term: node.CurrentTerm,
-//     CurrentTermLeader: node.CurrentTermLeader,
-//     CommittedEntryIndex: node.CommittedEntryIndex,
-//     Log: node.Log,
-//     State: node.State,
-//     NodeIntervalScalar: Node.NodeIntervalScalar
-//   );
-// });
+app.MapGet("/nodeData", () =>
+{
+  return new NodeData(
+    Id: node.Id,
+    Status: node.serverType,
+    ElectionTimeout: node.ElectionTimeout,
+    Term: node.term,
+    CurrentTermLeader: node.leaderId,
+    CommittedEntryIndex: node.committedIndex,
+    Log: node.log,
+    State: node.responsive
+  );
+});
+
 
 // app.MapPost("/request/appendEntries", async (AppendEntriesData request) =>
 // {

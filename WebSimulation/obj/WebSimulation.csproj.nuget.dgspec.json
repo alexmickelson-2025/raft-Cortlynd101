@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj": {}
+    "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj": {
+    "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj",
+        "projectUniqueName": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj",
         "projectName": "Raft 5.2 Class Library",
-        "projectPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj",
+        "projectPath": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj",
         "packagesPath": "C:\\Users\\SnowAdmin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\obj\\",
+        "outputPath": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -70,14 +70,14 @@
         }
       }
     },
-    "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj": {
+    "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj",
+        "projectUniqueName": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj",
         "projectName": "WebSimulation",
-        "projectPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj",
+        "projectPath": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\WebSimulation.csproj",
         "packagesPath": "C:\\Users\\SnowAdmin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\obj\\",
+        "outputPath": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\WebSimulation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -99,8 +99,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj": {
-                "projectPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj"
+              "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj": {
+                "projectPath": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj"
               }
             }
           }

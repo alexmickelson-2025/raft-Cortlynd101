@@ -1,6 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @using System.Collections.Concurrent
+@using Raft_5._2_Class_Library
 
 <PageTitle>Home</PageTitle>
 
@@ -14,21 +15,134 @@
             </div>
         }
     }
-</div>>
+</div>
+
+@foreach (var node in nodes)
+{
+    <div class="p-3 col-4">
+        <div class="border p-3 rounded-3">
+            <div>
+                Id: @node.Id
+            </div>
+            <div>
+                Election timeout: @node.electionTimeout
+            </div>
+            <div>
+                Node state: @node.serverType
+            </div>
+            <div>
+                Node term: @node.term
+            </div>
+            <div>
+                Node they think is the leader: @node.leaderId
+            </div>
+            <div>
+                State: 
+                @if (node.responsive)
+                {
+                    <div>
+                        Responsive.
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        Unresponsive.
+                    </div>
+                }
+            </div>
+            <div>
+                Commit index: @node.committedIndex
+            </div>
+            <div>
+                Log entries:
+                @foreach(var log in node.log)
+                {
+                    <div class="row border p-3 rounded-3">
+                        <div>
+                            Log index: @log.Key
+                        </div>
+                        <div>
+                            Term id: @log.Key
+                        </div>
+                        <div>
+    using Microsoft.AspNetCore.SignalR.Protocol;
+                            Log value: @log.Value
+                        </div>
+                        <div>
+                            Log committed: @(log.Key >= node.committedIndex)
+                        </div>
+                    </div>
+                }
+            </div>
+            @* <div class="border p-3 rounded-3">
+                <input type="text" id="value" name="value" @bind:event="oninput" @bind=value />
+                <button @onclick="() => Set(node.Id, value)">Set Next Log Entry</button>
+            </div>
+            <div class="border p-3 rounded-3">
+                <button @onclick="() => TogglePause(node.Id)">Toggle Pause</button>
+            </div> *@
+        </div>
+    </div>
+}
 
 @code {
+     private Timer? timer;
+    public Cluster cluster = new();
+    public List<INode> nodes = [];
     HttpClient http = new HttpClient();
 
     string[] Urls = Environment.GetEnvironmentVariable("NODE_URLS").Split(',');
-    @* ConcurrentDictionary<string, NodeData> data = new();
+    ConcurrentDictionary<string, NodeData> data = new();
     
-    string StateClass(NodeDate node)
+    @* string StateClass(NodeData node)
     {
-        if(node.Status == NodeStatus.Leader)
+        if(node.serverType == "leader")
         {
-
+            return "text-primary";
+        }
+        if(node.serverType == "candidate")
+        {
+            return "text-secondary";
+        }
+        if(node.serverType == "follower")
+        {
+            return "text-primary";
         }
     } *@
 
-
+    string TermClass(NodeData node)
+    {
+        return "";
+    }
+    protected override void OnInitialized()
+    {
+        timer = new Timer(async _ => 
+        {
+            await Task.WhenAll(
+                Urls.Select(async url => 
+                {
+                    try
+                    {
+                        var nodeData = await http.GetFromJsonAsync<NodeData>(url);
+                        if (nodeData != null)
+                        {
+                            data[url] = nodeData;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Node is null: ", url);
+                        }
+                        
+                    }
+                    catch (HttpRequestException)
+                    {
+                        Console.WriteLine($"Node {url} is unresponsive.");
+                        data.TryRemove(url, out var removedNodeData);
+                    }
+                }).ToArray()
+            );
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 200);
+    }
 }
