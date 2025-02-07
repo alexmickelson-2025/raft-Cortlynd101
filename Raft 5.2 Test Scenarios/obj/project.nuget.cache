@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7AidMEdXnk0=",
+  "dgSpecHash": "CWCeh9xaf5U=",
   "success": true,
-  "projectFilePath": "C:\\users\\cort.cox\\source\\repos\\raft-Cortlynd101-3\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
+  "projectFilePath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SnowAdmin\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\SnowAdmin\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",

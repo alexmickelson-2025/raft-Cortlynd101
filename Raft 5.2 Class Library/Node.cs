@@ -41,6 +41,7 @@ public class Node : INode
     public int previousIndex { get; set; } = 0;
     public int previousTerm { get; set; } = 0;
     public bool thereIsACandidate { get; set; } = false;
+    public string Url { get; } = "";
 
     public Node()
     {
@@ -49,6 +50,12 @@ public class Node : INode
     public Node(bool responsiveOrNot)
     {
         responsive = responsiveOrNot;
+    }
+    public Node(int id, string url)
+    {
+        Id = id;
+        Url = url;
+        responsive = true;
     }
 
     public void Vote(List<INode> nodes, int id)
@@ -70,7 +77,14 @@ public class Node : INode
 
             if (votingFor != -1)
             {
-                nodes[votingFor].voteCount++;
+                if (Url == "")
+                {
+                    nodes[votingFor].voteCount++;
+                }
+                else if (nodes.Count() >= votingFor + 1 && Url != "")
+                {
+                    nodes[votingFor].voteCount++;
+                }
                 return;
             }
 
@@ -111,14 +125,17 @@ public class Node : INode
 
     public void Act(List<INode> nodes, int id, Election election)
     {
-        Console.WriteLine("This node is a: "+ nodes[id].serverType);
         Thread.Sleep(10);
         if (responsive == false)
         {
             return;
         }
 
-        Id = id;
+        if (Url != "")
+        {
+            Id = id;
+        }
+
         if (serverType == "leader")
         {
             Random random = new();
@@ -195,6 +212,7 @@ public class Node : INode
         }
 
         Thread.Sleep(electionTimeout);
+        Console.WriteLine("Node just finshed an election timeout timer (will only timeout if there's no leader). Node id: "+ id);
         if (!receivedHeartBeat)
         {
             leaderId = -1;
@@ -247,7 +265,6 @@ public class Node : INode
                         node.log.Add(i, log[i]);
                     }
                 }
-                //Might need to do this multiple times?
                 nodes[id].RecieveLogCommit();
             }
             else

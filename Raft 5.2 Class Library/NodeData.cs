@@ -4,18 +4,18 @@ public class NodeData
 {
     private int id;
     private object status;
-    private Action<Election, List<INode>, int> electionTimeout;
+    //private Action<Election, List<INode>, int> electionTimeout;
     private object term;
     private object currentTermLeader;
     private object committedEntryIndex;
     private object log;
     private object state;
 
-    public NodeData(int Id, object Status, Action<Election, List<INode>, int> ElectionTimeout, object Term, object CurrentTermLeader, object CommittedEntryIndex, object Log, object State)
+    public NodeData(int Id, object Status, /*Action<Election, List<INode>, int> ElectionTimeout,*/ object Term, object CurrentTermLeader, object CommittedEntryIndex, object Log, object State)
     {
         id = Id;
         status = Status;
-        electionTimeout = ElectionTimeout;
+        //electionTimeout = ElectionTimeout;
         term = Term;
         currentTermLeader = CurrentTermLeader;
         committedEntryIndex = CommittedEntryIndex;

@@ -1,12 +1,20 @@
+using Microsoft.AspNetCore.WebSockets;
 using RaftClient.Components;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseWebRoot("wwwroot");
+builder.Services.AddRazorPages();
+builder.Services.AddWebSockets(options => { });
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
+app.UseWebSockets();
+app.UseStaticFiles();
+app.UseRouting();
+app.MapRazorPages();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

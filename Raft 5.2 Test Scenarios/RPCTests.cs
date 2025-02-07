@@ -455,7 +455,7 @@ public class RPCTests
         candidate2.BecomeCandidate();
         //Ensure the term is greater than the followers terms and greater than the other candidate
         candidate2.term = candidate2.term + 1;
-        candidate2.voteCount = 1;
+        candidate2.voteCount = 2;
         candidate2.forcedOutcome = true;
         Assert.Equal("candidate", candidate2.serverType);
 
@@ -571,9 +571,9 @@ public class RPCTests
         nodes.Add(follower);
         cluster.runCluster(nodes);
 
-        //Then the follower appended its entries and rejects the false leader by making itself a candidate (so its leaderId will be 1)
+        //Then the follower appended its entries and rejects the false leader by making itself a candidate (so its leaderId will be 0)
         Thread.Sleep(50);
-        Assert.Equal(1, follower.leaderId);
+        Assert.Equal(0, follower.leaderId);
     }
 
     [Fact]
