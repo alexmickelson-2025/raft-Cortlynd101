@@ -2,6 +2,7 @@
 @rendermode InteractiveServer
 @using System.Collections.Concurrent
 @using Raft_5._2_Class_Library
+@inject RaftService RaftService
 
 <PageTitle>Home</PageTitle>
 
@@ -24,19 +25,19 @@
         <div class="p-3 col-4">
             <div class="border p-3 rounded-3">
                 <div>
-                    Id: @node.Id
+                    Id: @node.id
                 </div>
                 <div>
                     Election timeout: @node.electionTimeout
                 </div>
                 <div>
-                    Node state: @node.serverType
+                    Node state: @node.status
                 </div>
                 <div>
                     Node term: @node.term
                 </div>
                 <div>
-                    Node they think is the leader: @node.leaderId
+                    Node they think is the leader: @node.currentTermLeader
                 </div>
                 <div>
                     State: 
@@ -54,7 +55,7 @@
                     }
                 </div>
                 <div>
-                    Commit index: @node.committedIndex
+                    Commit index: @node.committedEntryIndex
                 </div>
                 <div>
                     Log entries:
@@ -71,7 +72,7 @@
                                 Log value: @log.Value
                             </div>
                             <div>
-                                Log committed: @(log.Key >= node.committedIndex)
+                                Log committed: @(log.Key >= node.committedEntryIndex)
                             </div>
                         </div>
                     }
@@ -89,10 +90,13 @@
 }
 
 @code {
-     private Timer? timer;
+    private Timer? timer;
     public Cluster cluster = new();
-    public List<INode> nodes = [];
+    public List<NodeData> nodes = [];
     HttpClient http = new HttpClient();
+    NodeData node1data;
+    NodeData node2data;
+    NodeData node3data;
 
     string[] Urls = Environment.GetEnvironmentVariable("NODE_URLS").Split(',');
     ConcurrentDictionary<string, NodeData> data = new();
@@ -117,9 +121,20 @@
     {
         return "";
     }
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        timer = new Timer(async _ => 
+        @* timer = new Timer(async _ => 
+        {
+            node1data = await RaftService.GetDataFromApi(Urls[0]);
+            node2data = await RaftService.GetDataFromApi(Urls[1]);
+            node3data = await RaftService.GetDataFromApi(Urls[2]);
+        }, null, 0, 200);
+
+        nodes.Add(node1data);
+        nodes.Add(node2data);
+        nodes.Add(node3data); *@
+
+        @* timer = new Timer(async _ => 
         {
             await Task.WhenAll(
                 Urls.Select(async url => 
@@ -145,6 +160,6 @@
                 }).ToArray()
             );
             await InvokeAsync(StateHasChanged);
-        }, null, 0, 200);
+        }, null, 0, 200); *@
     }
 }

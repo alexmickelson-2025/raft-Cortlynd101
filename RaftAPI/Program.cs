@@ -53,12 +53,13 @@ app.MapGet("/nodeData", () =>
   return new NodeData(
     Id: node.Id,
     Status: node.serverType,
-    //ElectionTimeout: node.electionTimeout.ToString(),
+    ElectionTimeout: node.electionTimeout,
     Term: node.term,
     CurrentTermLeader: node.leaderId,
     CommittedEntryIndex: node.committedIndex,
     Log: node.log,
-    State: node.responsive
+    State: node.responsive,
+    Responsive: node.responsive
   );
 });
 

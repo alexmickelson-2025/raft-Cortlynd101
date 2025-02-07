@@ -10,6 +10,8 @@ builder.Services.AddWebSockets(options => { });
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddHttpClient<RaftService>();
+
 var app = builder.Build();
 app.UseWebSockets();
 app.UseStaticFiles();
