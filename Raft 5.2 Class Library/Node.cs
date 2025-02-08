@@ -145,7 +145,7 @@ public class Node : INode
             leaderActed += 4;
             Random random = new();
             int randomNum = random.Next(0, 100);
-            if (forcedOutcome == false && leaderActed > electionTimeout)
+            if (forcedOutcome == false && leaderActed > (electionTimeout * 2))
             {
                 nodes[id].BecomeFollower();
             }

@@ -4,6 +4,7 @@
 @using Raft_5._2_Class_Library
 @using System.Text.Json
 @inject RaftService RaftService
+@inject IJSRuntime JS
 
 <PageTitle>Home</PageTitle>
 
@@ -20,7 +21,7 @@
                     Election timeout: @node.electionTimeout
                 </div>
                 <div>
-                    Node state: @node.status
+                    Node type: @node.status
                 </div>
                 <div>
                     Node term: @node.term
@@ -48,7 +49,7 @@
                 </div>
                 <div>
                     Log entries:
-                    @* @foreach(var log in node.log)
+                    @foreach(var log in node.log)
                     {
                         <div class="row border p-3 rounded-3">
                             <div>
@@ -64,21 +65,22 @@
                                 Log committed: @(log.Key >= node.committedEntryIndex)
                             </div>
                         </div>
-                    } *@
-                </div>
-                @* <div class="border p-3 rounded-3">
-                    <input type="text" id="value" name="value" @bind:event="oninput" @bind=value />
-                    <button @onclick="() => Set(node.Id, value)">Set Next Log Entry</button>
+                    }
                 </div>
                 <div class="border p-3 rounded-3">
-                    <button @onclick="() => TogglePause(node.Id)">Toggle Pause</button>
-                </div> *@
+                    <input type="text" id="value" name="value" @bind:event="oninput" @bind=value />
+                    <button @onclick="() => Set(node.id, value)">Set Next Log Entry</button>
+                </div>
+                <div class="border p-3 rounded-3">
+                    <button @onclick="() => TogglePause(node.id)">Toggle Pause</button>
+                </div>
             </div>
         </div>
     }
 }
 
 @code {
+    public string value = "";
     private Timer? timer;
     public Cluster cluster = new();
     public List<NodeData> nodes = [];
@@ -109,33 +111,22 @@
         {
             throw new Exception("Client won the race condition: ", ex);
         }
-
-        @* timer = new Timer(async _ => 
+    }
+    private async void Set(int id, string value)
+    {
+        string message = $"Node response: {nodes[id].Set(value)}";
+        await JS.InvokeVoidAsync("alert", message);
+        return;
+    }
+    private void TogglePause(int id)
+    {
+        if (nodes[id].responsive)
         {
-            await Task.WhenAll(
-                Urls.Select(async url => 
-                {
-                    try
-                    {
-                        var nodeData = await http.GetFromJsonAsync<NodeData>(url);
-                        if (nodeData != null)
-                        {
-                            data[url] = nodeData;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Node is null: ", url);
-                        }
-                        
-                    }
-                    catch (HttpRequestException)
-                    {
-                        Console.WriteLine($"Node {url} is unresponsive.");
-                        data.TryRemove(url, out var removedNodeData);
-                    }
-                }).ToArray()
-            );
-            await InvokeAsync(StateHasChanged);
-        }, null, 0, 200); *@
+            nodes[id].Pause(nodes, id);
+        }
+        else
+        {
+            nodes[id].UnPause(nodes, id);
+        }
     }
 }

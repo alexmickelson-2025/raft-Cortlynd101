@@ -46,4 +46,28 @@ public class NodeData
         state = State;
         responsive = Responsive;
     }
+    public void Pause(List<NodeData> nodes, int id)
+    {
+        nodes[id].responsive = false;
+    }
+    public void UnPause(List<NodeData> nodes, int id)
+    {
+        nodes[id].responsive = true;
+    }
+    public bool Set(string value)
+    {
+        int key = committedEntryIndex;
+        committedEntryIndex++;
+        if (state != "leader" || value is null)
+        {
+            return false; 
+        }
+
+        ReceiveCommand(key, value);
+        return true;
+    }
+    public void ReceiveCommand(int key, string value)
+    {
+        log.Add(key, value);
+    }
 }
