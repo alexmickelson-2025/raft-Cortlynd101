@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "0gBlDh0VHLYtdY18J7ZIJzgCXgV8qN3TI7Zz5+Vfhyw=",
+  "Hash": "QywAytag5mDGxLDweYwOk2l1An2uap0x2+o5D1bobjA=",
   "Source": "RaftAPI",
   "BasePath": "_content/RaftAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

@@ -9,6 +9,8 @@ public class SimulationNode : INode
     {
         InnerNode = node;
     }
+    public int delay { get => ((INode)InnerNode).delay; set => ((INode)InnerNode).delay = value; }
+    public int intervalScaler { get => ((INode)InnerNode).intervalScaler; set => ((INode)InnerNode).intervalScaler = value; }
     public bool _vote { get => ((INode)InnerNode)._vote; set => ((INode)InnerNode)._vote = value; }
     public int directedVote { get => ((INode)InnerNode).directedVote; set => ((INode)InnerNode).directedVote = value; }
     public int electionTimeout { get => ((INode)InnerNode).electionTimeout; set => ((INode)InnerNode).electionTimeout = value; }
@@ -27,13 +29,11 @@ public class SimulationNode : INode
     public int termVotedFor { get => ((INode)InnerNode).termVotedFor; set => ((INode)InnerNode).termVotedFor = value; }
     public int voteCount { get => ((INode)InnerNode).voteCount; set => ((INode)InnerNode).voteCount = value; }
     public int votingFor { get => ((INode)InnerNode).votingFor; set => ((INode)InnerNode).votingFor = value; }
-    public int delay { get => ((INode)InnerNode).delay; set => ((INode)InnerNode).delay = value; }
-    public int intervalScaler { get => ((INode)InnerNode).intervalScaler; set => ((INode)InnerNode).intervalScaler = value; }
+    public Dictionary<int, string> log { get => ((INode)InnerNode).log; set => ((INode)InnerNode).log = value; }
     public bool sentRPCs { get => ((INode)InnerNode).sentRPCs; set => ((INode)InnerNode).sentRPCs = value; }
     public bool forcedOutcome { get => ((INode)InnerNode).forcedOutcome; set => ((INode)InnerNode).forcedOutcome = value; }
     public List<int> nextIndex { get => ((INode)InnerNode).nextIndex; set => ((INode)InnerNode).nextIndex = value; }
     public int committedIndex { get => ((INode)InnerNode).committedIndex; set => ((INode)InnerNode).committedIndex = value; }
-    public Dictionary<int, string> log { get => ((INode)InnerNode).log; set => ((INode)InnerNode).log = value; }
     public int nodeCount { get => ((INode)InnerNode).nodeCount; set => ((INode)InnerNode).nodeCount = value; }
     public int committedLogCount { get => ((INode)InnerNode).committedLogCount; set => ((INode)InnerNode).committedLogCount = value; }
     public int receivedCommittedLogIndex { get => ((INode)InnerNode).receivedCommittedLogIndex; set => ((INode)InnerNode).receivedCommittedLogIndex = value; }
@@ -42,9 +42,9 @@ public class SimulationNode : INode
     public int previousTerm { get => ((INode)InnerNode).previousTerm; set => ((INode)InnerNode).previousTerm = value; }
     public bool thereIsACandidate { get => ((INode)InnerNode).thereIsACandidate; set => ((INode)InnerNode).thereIsACandidate = value; }
 
-    public void Act(List<INode> nodes, int id, Election election)
+    public void Act(ref List<INode> nodes, int id, Election election)
     {
-        ((INode)InnerNode).Act(nodes, id, election);
+        ((INode)InnerNode).Act(ref nodes, id, election);
     }
 
     public void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex, int term, int prevIndex, int prevTerm)
@@ -107,9 +107,9 @@ public class SimulationNode : INode
         ((INode)InnerNode).receiveRPC(election, nodes, id, sentTerm);
     }
 
-    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, int commitIndex, List<INode> nodes)
+    public void RecieveAppendEntries(List<string> newEntries, int id, int receivedTerm, int lastCommittedLogIndex, List<INode> nodes)
     {
-        ((INode)InnerNode).RecieveAppendEntries(newEntries, id, receivedTerm, commitIndex, nodes);
+        ((INode)InnerNode).RecieveAppendEntries(newEntries, id, receivedTerm, lastCommittedLogIndex, nodes);
     }
 
     public void RecieveLogCommit()

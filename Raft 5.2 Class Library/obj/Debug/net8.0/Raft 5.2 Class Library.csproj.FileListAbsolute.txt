@@ -94,3 +94,15 @@ C:/Users/cort.cox/Source/Repos/raft-Cortlynd101-4/Raft 5.2 Class Library/obj/Deb
 /mnt/wsl/docker-desktop-bind-mounts/Ubuntu/72f6f806c4545e12c484c8fb84f6ceaeb7180321484056c205aaca228c37bd38/Raft 5.2 Class Library/obj/Debug/net8.0/refint/Raft 5.2 Class Library.dll
 /mnt/wsl/docker-desktop-bind-mounts/Ubuntu/72f6f806c4545e12c484c8fb84f6ceaeb7180321484056c205aaca228c37bd38/Raft 5.2 Class Library/obj/Debug/net8.0/Raft 5.2 Class Library.pdb
 /mnt/wsl/docker-desktop-bind-mounts/Ubuntu/72f6f806c4545e12c484c8fb84f6ceaeb7180321484056c205aaca228c37bd38/Raft 5.2 Class Library/obj/Debug/net8.0/ref/Raft 5.2 Class Library.dll
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\bin\Debug\net8.0\Raft 5.2 Class Library.deps.json
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\bin\Debug\net8.0\Raft 5.2 Class Library.dll
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\bin\Debug\net8.0\Raft 5.2 Class Library.pdb
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.AssemblyInfoInputs.cache
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.AssemblyInfo.cs
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.csproj.CoreCompileInputs.cache
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.sourcelink.json
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.dll
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\refint\Raft 5.2 Class Library.dll
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\Raft 5.2 Class Library.pdb
+C:\Users\cort.cox\Source\Repos\raft-Cortlynd101-4\Raft 5.2 Class Library\obj\Debug\net8.0\ref\Raft 5.2 Class Library.dll

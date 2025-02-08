@@ -5691,23 +5691,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\SnowAdmin\\.nuget\\packages\\": {},
+    "C:\\Users\\cort.cox\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
+      "projectUniqueName": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
       "projectName": "Raft 5.2 Test Scenarios",
-      "projectPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
-      "packagesPath": "C:\\Users\\SnowAdmin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\obj\\",
+      "projectPath": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\Raft 5.2 Test Scenarios.csproj",
+      "packagesPath": "C:\\Users\\cort.cox\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-4\\Raft 5.2 Test Scenarios\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\SnowAdmin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cort.cox\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5723,8 +5723,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-4\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj": {
-              "projectPath": "C:\\Users\\cort.cox\\source\\repos\\raft-Cortlynd101-4\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj"
+            "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-4\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj": {
+              "projectPath": "C:\\Users\\cort.cox\\Source\\Repos\\raft-Cortlynd101-4\\Raft 5.2 Class Library\\Raft 5.2 Class Library.csproj"
             }
           }
         }

@@ -2,23 +2,12 @@
 @rendermode InteractiveServer
 @using System.Collections.Concurrent
 @using Raft_5._2_Class_Library
+@using System.Text.Json
 @inject RaftService RaftService
 
 <PageTitle>Home</PageTitle>
 
-<div>
-    @if (Urls is not null)
-    {
-        foreach(var url in Urls)
-        {
-            <div>
-                @url.ToString();
-            </div>
-        }
-    }
-</div>
-
-@if (nodes is not null)
+@if (nodes is not null && nodes.Count() > 0)
 {
     @foreach (var node in nodes)
     {
@@ -59,7 +48,7 @@
                 </div>
                 <div>
                     Log entries:
-                    @foreach(var log in node.log)
+                    @* @foreach(var log in node.log)
                     {
                         <div class="row border p-3 rounded-3">
                             <div>
@@ -75,7 +64,7 @@
                                 Log committed: @(log.Key >= node.committedEntryIndex)
                             </div>
                         </div>
-                    }
+                    } *@
                 </div>
                 @* <div class="border p-3 rounded-3">
                     <input type="text" id="value" name="value" @bind:event="oninput" @bind=value />
@@ -94,45 +83,32 @@
     public Cluster cluster = new();
     public List<NodeData> nodes = [];
     HttpClient http = new HttpClient();
-    NodeData node1data;
-    NodeData node2data;
-    NodeData node3data;
+    NodeData node1data = new NodeData();
+    NodeData node2data = new NodeData();
+    NodeData node3data = new NodeData();
 
     string[] Urls = Environment.GetEnvironmentVariable("NODE_URLS").Split(',');
     ConcurrentDictionary<string, NodeData> data = new();
-    
-    @* string StateClass(NodeData node)
-    {
-        if(node.serverType == "leader")
-        {
-            return "text-primary";
-        }
-        if(node.serverType == "candidate")
-        {
-            return "text-secondary";
-        }
-        if(node.serverType == "follower")
-        {
-            return "text-primary";
-        }
-    } *@
-
-    string TermClass(NodeData node)
-    {
-        return "";
-    }
     protected override async Task OnInitializedAsync()
     {
-        @* timer = new Timer(async _ => 
+        try
         {
-            node1data = await RaftService.GetDataFromApi(Urls[0]);
-            node2data = await RaftService.GetDataFromApi(Urls[1]);
-            node3data = await RaftService.GetDataFromApi(Urls[2]);
-        }, null, 0, 200);
+            timer = new Timer(async _ => 
+            {
+                node1data = await RaftService.GetDataFromApi(Urls[0]);
+                Console.WriteLine($"Node1: {JsonSerializer.Serialize(node1data)}");
+                node2data = await RaftService.GetDataFromApi(Urls[1]);
+                node3data = await RaftService.GetDataFromApi(Urls[2]);
 
-        nodes.Add(node1data);
-        nodes.Add(node2data);
-        nodes.Add(node3data); *@
+                nodes = new List<NodeData> { node1data, node2data, node3data };
+                await InvokeAsync(StateHasChanged);
+            }, null, 0, 200);
+            await InvokeAsync(StateHasChanged);
+        }
+        catch(HttpRequestException ex)
+        {
+            throw new Exception("Client won the race condition: ", ex);
+        }
 
         @* timer = new Timer(async _ => 
         {

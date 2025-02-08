@@ -3,53 +3,37 @@ using Raft_5._2_Class_Library;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:8080");
+builder.Services.AddAntiforgery(options => options.SuppressXFrameOptionsHeader = true);
 
 var nodeId = Environment.GetEnvironmentVariable("NODE_ID") ?? throw new Exception("NODE_ID environment variable not set");
 var otherNodesRaw = Environment.GetEnvironmentVariable("OTHER_NODES") ?? throw new Exception("OTHER_NODES environment variable not set");
 var nodeIntervalScalarRaw = Environment.GetEnvironmentVariable("NODE_INTERVAL_SCALAR") ?? throw new Exception("NODE_INTERVAL_SCALAR environment variable not set");
-
-builder.Services.AddLogging();
-var serviceName = "Node" + nodeId;
-
-var app = builder.Build();
-
-// var logger = app.Services.GetService<ILogger<Program>>();
-// logger?.LogInformation("Node ID {name}", nodeId);
-// logger?.LogInformation("Other nodes environment config: {}", otherNodesRaw);
 
 INode[] otherNodes = otherNodesRaw
   .Split(";")
   .Select(s => new Node(int.Parse(s.Split(",")[0]), s.Split(",")[1]))
   .ToArray();
 
-// logger?.LogInformation("other nodes {nodes}", JsonSerializer.Serialize(otherNodes));
-
 INode node = new Node()
 {
   Id = int.Parse(nodeId),
-  forcedOutcome = true,
 };
 
-List<INode> nodes = new List<INode>();
-nodes.Add(node);
-otherNodes[0].forcedOutcome = true;
-otherNodes[1].forcedOutcome = true;
-nodes.Add(otherNodes[0]);
-nodes.Add(otherNodes[1]);
-
-Cluster cluster = new();
-cluster.runCluster(nodes);
-
-Timer? timer;
-timer = new Timer(_ =>
+List<INode> nodes = new List<INode>{ node };
+if (otherNodes.Length >= 2)
 {
-    cluster.runCluster(nodes);
-}, null, 0, 200);
+    nodes.AddRange(otherNodes);
+}
+builder.Services.AddLogging();
+builder.Services.AddSingleton<INode>(node);
 
-app.MapGet("/health", () => "healthy");
+var serviceName = "Node" + nodeId;
+
+var app = builder.Build();
 
 app.MapGet("/nodeData", () =>
 {
+  Console.WriteLine($"Fetching NodeData - Id: {node.Id}, Term: {node.term}, Status: {node.serverType}");
   return new NodeData(
     Id: node.Id,
     Status: node.serverType,
@@ -58,19 +42,18 @@ app.MapGet("/nodeData", () =>
     CurrentTermLeader: node.leaderId,
     CommittedEntryIndex: node.committedIndex,
     Log: node.log,
-    State: node.responsive,
+    State: node.serverType,
     Responsive: node.responsive
   );
 });
 
-// var node = new Node(otherNodes)
-// {
-//   Id = int.Parse(nodeId),
-//   logger = app.Services.GetService<ILogger<Node>>()
-// };
-
-// Node.NodeIntervalScalar = double.Parse(nodeIntervalScalarRaw);
-// node.RunElectionLoop();
+Cluster cluster = new();
+Timer? timer;
+timer = new Timer(_ =>
+{
+  Console.WriteLine($"Node election timeout for node {node.Id}: " + node.electionTimeout);
+  cluster.runCluster(nodes);
+}, null, 0, 200);
 
 // app.MapPost("/request/appendEntries", async (AppendEntriesData request) =>
 // {

@@ -13,7 +13,7 @@ public class Cluster : ICluster
         {
             for (int i = 0; i < nodes.Count(); i++)
             {
-                nodes[i].Act(nodes, i, election);
+                nodes[i].Act(ref nodes, i, election);
             }
             clusterRunning = false;
         }

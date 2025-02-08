@@ -42,6 +42,9 @@ public class Node : INode
     public int previousTerm { get; set; } = 0;
     public bool thereIsACandidate { get; set; } = false;
     public string Url { get; } = "";
+    public int candidateActed = 0;
+    public int leaderActed = 0;
+    public int followerActed = 0;
 
     public Node()
     {
@@ -89,7 +92,8 @@ public class Node : INode
             }
 
             bool voting = true;
-            while (voting)
+            int maxAttempts = nodes.Count;
+            while (voting && maxAttempts-- > 0)
             {
                 if (nodes[randomNum].serverType == "candidate")
                 {
@@ -123,7 +127,7 @@ public class Node : INode
         }
     }
 
-    public void Act(List<INode> nodes, int id, Election election)
+    public void Act(ref List<INode> nodes, int id, Election election)
     {
         Thread.Sleep(10);
         if (responsive == false)
@@ -138,9 +142,10 @@ public class Node : INode
 
         if (serverType == "leader")
         {
+            leaderActed += 4;
             Random random = new();
             int randomNum = random.Next(0, 100);
-            if (randomNum > 100 && forcedOutcome == false)
+            if (forcedOutcome == false && leaderActed > electionTimeout)
             {
                 nodes[id].BecomeFollower();
             }
@@ -156,15 +161,27 @@ public class Node : INode
         }
         else if (serverType == "follower")
         {
+            //if (followerActed > electionTimeout)
+            //{
+            //    BecomeCandidate();
+            //    return;
+            //}
             ElectionTimeout(election, nodes, id);
+            followerActed += 4;
         }
         else
         {
+            if (candidateActed > electionTimeout)
+            {
+                BecomeFollower();
+                return;
+            }
             SendRPCs(election, nodes);
             if (!election.electionOngoing)
             {
                 StartElection(election, nodes);
             }
+            candidateActed += 4;
         }
         hasActed = true;
     }
@@ -367,6 +384,9 @@ public class Node : INode
         sentRPCs = false;
         serverType = "follower";
         receivedHeartBeat = false;
+        thereIsACandidate = false;
+        candidateActed = 0;
+        leaderActed = 0;
     }
 
     public void BecomeLeader()
@@ -374,6 +394,8 @@ public class Node : INode
         serverType = "leader";
         leaderId = leaderId;
         receivedHeartBeat = false;
+        thereIsACandidate = false;
+
     }
     public void BecomeCandidate()
     {
@@ -381,6 +403,8 @@ public class Node : INode
         serverType = "candidate";
         leaderId = Id;
         receivedHeartBeat = false;
+        thereIsACandidate = false;
+        followerActed = 0;
     }
     public void BecomeDirectedFollower()
     {

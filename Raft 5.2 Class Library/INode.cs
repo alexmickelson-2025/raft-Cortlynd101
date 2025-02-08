@@ -41,7 +41,7 @@ public interface INode
     void UnPause(Cluster cluster, List<INode> nodes, int id);
     void ReceiveCommand(int key, string value);
     void AttemptLogCommit(List<INode> nodes, int id, int highestCommittedIndex, int term);
-    void Act(List<INode> nodes, int id, Election election);
+    void Act(ref List<INode> nodes, int id, Election election);
     void AppendEntries(List<INode> nodes, int id, int highestCommittedIndex, int term, int prevIndex, int prevTerm);
     void BecomeCandidate();
     void BecomeDirectedFollower();

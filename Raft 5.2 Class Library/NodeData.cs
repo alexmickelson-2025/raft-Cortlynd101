@@ -1,18 +1,40 @@
+using System.Text.Json.Serialization;
 using Raft_5._2_Class_Library;
 
 public class NodeData
 {
+    [JsonInclude]
     public int id;
+    [JsonInclude]
     public string status;
+    [JsonInclude]
     public int electionTimeout;
+    [JsonInclude]
     public int term;
+    [JsonInclude]
     public int currentTermLeader;
+    [JsonInclude]
     public int committedEntryIndex;
+    [JsonInclude]
     public Dictionary<int, string> log;
-    public object state;
+    [JsonInclude]
+    public string state;
+    [JsonInclude]
     public bool responsive;
+    public NodeData()
+    {
+        id = 0;
+        status = "unresponsive";
+        electionTimeout = 0;
+        term = 0;
+        currentTermLeader = 0;
+        committedEntryIndex = 0;
+        log = new Dictionary<int, string>();
+        state = "uninitalized";
+        responsive = false;
+    }
 
-    public NodeData(int Id, string Status, int ElectionTimeout, int Term, int CurrentTermLeader, int CommittedEntryIndex, Dictionary<int, string> Log, object State, bool Responsive)
+    public NodeData(int Id, string Status, int ElectionTimeout, int Term, int CurrentTermLeader, int CommittedEntryIndex, Dictionary<int, string> Log, string State, bool Responsive)
     {
         id = Id;
         status = Status;
